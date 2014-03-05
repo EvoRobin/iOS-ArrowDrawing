@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 Shinobi Controls. All rights reserved.
 //
 
-#import "SCSecondViewController.h"
+#import "SCCoreAnimationArrowViewController.h"
 
-@interface SCSecondViewController ()
+@interface SCCoreAnimationArrowViewController ()
 
 @end
 
-@implementation SCSecondViewController
+@implementation SCCoreAnimationArrowViewController
 
 - (void)viewDidLoad
 {

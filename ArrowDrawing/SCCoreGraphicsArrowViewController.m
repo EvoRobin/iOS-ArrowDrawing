@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 Shinobi Controls. All rights reserved.
 //
 
-#import "SCFirstViewController.h"
+#import "SCCoreGraphicsArrowViewController.h"
 
-@interface SCFirstViewController ()
+@interface SCCoreGraphicsArrowViewController ()
 
 @end
 
-@implementation SCFirstViewController
+@implementation SCCoreGraphicsArrowViewController
 
 - (void)viewDidLoad
 {

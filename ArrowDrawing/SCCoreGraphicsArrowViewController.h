@@ -1,5 +1,5 @@
 //
-//  SCSecondViewController.h
+//  SCFirstViewController.h
 //  ArrowDrawing
 //
 //  Created by Sam Davies on 05/03/2014.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SCSecondViewController : UIViewController
+@interface SCCoreGraphicsArrowViewController : UIViewController
 
 @end
