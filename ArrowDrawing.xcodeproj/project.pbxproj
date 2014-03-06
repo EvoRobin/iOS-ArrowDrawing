@@ -22,6 +22,7 @@
 		F41A178E18C74A9F003E4C94 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F41A176D18C74A9F003E4C94 /* UIKit.framework */; };
 		F41A179618C74A9F003E4C94 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F41A179418C74A9F003E4C94 /* InfoPlist.strings */; };
 		F41A179818C74A9F003E4C94 /* ArrowDrawingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F41A179718C74A9F003E4C94 /* ArrowDrawingTests.m */; };
+		F41A17A418C7862A003E4C94 /* SCCoreGraphicsArrowView.m in Sources */ = {isa = PBXBuildFile; fileRef = F41A17A318C7862A003E4C94 /* SCCoreGraphicsArrowView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,9 @@
 		F41A179318C74A9F003E4C94 /* ArrowDrawingTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ArrowDrawingTests-Info.plist"; sourceTree = "<group>"; };
 		F41A179518C74A9F003E4C94 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F41A179718C74A9F003E4C94 /* ArrowDrawingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ArrowDrawingTests.m; sourceTree = "<group>"; };
+		F41A17A218C7862A003E4C94 /* SCCoreGraphicsArrowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCoreGraphicsArrowView.h; sourceTree = "<group>"; };
+		F41A17A318C7862A003E4C94 /* SCCoreGraphicsArrowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCoreGraphicsArrowView.m; sourceTree = "<group>"; };
+		F41A17A518C8A130003E4C94 /* SCArrowView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCArrowView.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +122,8 @@
 		F41A176F18C74A9F003E4C94 /* ArrowDrawing */ = {
 			isa = PBXGroup;
 			children = (
+				F41A17A518C8A130003E4C94 /* SCArrowView.h */,
+				F41A17A118C75FC4003E4C94 /* CoreGraphics Arrows */,
 				F41A177818C74A9F003E4C94 /* SCAppDelegate.h */,
 				F41A177918C74A9F003E4C94 /* SCAppDelegate.m */,
 				F41A177B18C74A9F003E4C94 /* Main.storyboard */,
@@ -158,6 +164,15 @@
 				F41A179418C74A9F003E4C94 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F41A17A118C75FC4003E4C94 /* CoreGraphics Arrows */ = {
+			isa = PBXGroup;
+			children = (
+				F41A17A218C7862A003E4C94 /* SCCoreGraphicsArrowView.h */,
+				F41A17A318C7862A003E4C94 /* SCCoreGraphicsArrowView.m */,
+			);
+			name = "CoreGraphics Arrows";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -278,6 +293,7 @@
 			files = (
 				F41A178318C74A9F003E4C94 /* SCCoreAnimationArrowViewController.m in Sources */,
 				F41A178018C74A9F003E4C94 /* SCCoreGraphicsArrowViewController.m in Sources */,
+				F41A17A418C7862A003E4C94 /* SCCoreGraphicsArrowView.m in Sources */,
 				F41A177A18C74A9F003E4C94 /* SCAppDelegate.m in Sources */,
 				F41A177618C74A9F003E4C94 /* main.m in Sources */,
 			);
