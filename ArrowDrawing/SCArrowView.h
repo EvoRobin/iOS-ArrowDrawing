@@ -15,6 +15,12 @@ typedef NS_ENUM(NSInteger, SCArrowViewCurveType) {
     SCArrowViewCurveTypeBoth
 };
 
+typedef NS_ENUM(NSInteger, SCArrowViewHeadType) {
+    SCArrowViewHeadTypeFilled,
+    SCArrowViewHeadTypeEdges,
+    SCArrowViewHeadTypeTriangle
+};
+
 
 @protocol SCArrowView <NSObject>
 
@@ -27,5 +33,6 @@ typedef NS_ENUM(NSInteger, SCArrowViewCurveType) {
 @property (nonatomic, assign) CGFloat bendiness;
 @property (nonatomic, strong) UIColor *color;
 @property (nonatomic, assign) SCArrowViewCurveType curveType;
+@property (nonatomic, assign) SCArrowViewHeadType headType;
 
 @end

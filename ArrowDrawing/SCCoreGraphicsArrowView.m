@@ -17,6 +17,7 @@
 @synthesize from = _from;
 @synthesize to = _to;
 @synthesize headSize = _headSize;
+@synthesize headType = _headType;
 
 - (id)initWithFrame:(CGRect)frame from:(CGPoint)from to:(CGPoint)to
 {
@@ -29,7 +30,8 @@
         // Set some defaults
         self.color = [UIColor redColor];
         self.lineThickness = 2.0;
-        self.headSize = 20;
+        self.headSize = 30;
+        self.headType = SCArrowViewHeadTypeFilled;
     }
     return self;
 }
@@ -55,7 +57,7 @@
     endVector.y = endVector.y - end.y;
     
     // Out at right angles
-    CGPoint perpVector = [self perpendicularToVector:endVector length:self.headSize / 2];
+    CGPoint perpVector = [self perpendicularToVector:endVector length:self.headSize * 0.4];
 
     // Back from tip
     CGPoint footOfArrow = [self addVector:end toVector:[self resizeVector:endVector length:self.headSize]];
@@ -68,6 +70,15 @@
     
     // Then to other out
     CGContextAddLineToPoint(cxt, arrowSide2.x, arrowSide2.y);
+    
+    if(self.headType == SCArrowViewHeadTypeTriangle) {
+        CGContextClosePath(cxt);
+    }
+    
+    if(self.headType == SCArrowViewHeadTypeFilled) {
+        [self.color setFill];
+        CGContextFillPath(cxt);
+    }
     
     // Stroke it
     CGContextStrokePath(cxt);
