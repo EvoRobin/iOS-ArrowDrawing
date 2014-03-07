@@ -32,6 +32,8 @@
         self.lineThickness = 2.0;
         self.headSize = 30;
         self.headType = SCArrowViewHeadTypeFilled;
+        self.bendiness = 0.2;
+        self.curveType = SCArrowViewCurveTypeLeft;
     }
     return self;
 }
@@ -44,7 +46,21 @@
     CGContextBeginPath(cxt);
     CGPoint start = [self convertNormalisedPointToCurrentFrame:self.from];
     CGPoint end   = [self convertNormalisedPointToCurrentFrame:self.to];
-    CGPoint control = CGPointMake(CGRectGetMaxX(self.bounds), 0);
+    
+    // Calculate arrow vector
+    CGPoint arrowVect = [self addVector:end toVector:[self multiplyVector:start byScalar:-1]];
+    // How bendy?
+    CGFloat perpLength = self.bendiness * [self vectorLength:arrowVect];
+    if(self.curveType == SCArrowViewCurveTypeLeft) {
+        perpLength *= -1;
+    }
+    
+    // Calculate perpendicular
+    CGPoint arrowPerp = [self perpendicularToVector:arrowVect length:perpLength];
+    //
+    CGPoint control = [self addVector:start toVector:[self multiplyVector:arrowVect byScalar:0.5]];
+    control = [self addVector:control toVector:arrowPerp];
+    
     CGContextMoveToPoint(cxt, start.x, start.y);
     CGContextAddQuadCurveToPoint(cxt, control.x, control.y, end.x, end.y);
     [self.color setStroke];
