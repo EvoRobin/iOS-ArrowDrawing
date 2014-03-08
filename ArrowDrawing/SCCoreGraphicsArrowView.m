@@ -32,8 +32,8 @@
         self.lineThickness = 2.0;
         self.headSize = 30;
         self.headType = SCArrowViewHeadTypeFilled;
-        self.bendiness = 0.2;
-        self.curveType = SCArrowViewCurveTypeLeft;
+        self.bendiness = 0.5;
+        self.curveType = SCArrowViewCurveTypeBoth;
     }
     return self;
 }
@@ -49,26 +49,42 @@
     
     // Calculate arrow vector
     CGPoint arrowVect = [self addVector:end toVector:[self multiplyVector:start byScalar:-1]];
+    CGContextMoveToPoint(cxt, start.x, start.y);
     // How bendy?
     CGFloat perpLength = self.bendiness * [self vectorLength:arrowVect];
-    if(self.curveType == SCArrowViewCurveTypeLeft) {
-        perpLength *= -1;
-    }
-    
     // Calculate perpendicular
     CGPoint arrowPerp = [self perpendicularToVector:arrowVect length:perpLength];
-    //
-    CGPoint control = [self addVector:start toVector:[self multiplyVector:arrowVect byScalar:0.5]];
-    control = [self addVector:control toVector:arrowPerp];
+    // In preparation for the head
+    CGPoint endVector;
     
-    CGContextMoveToPoint(cxt, start.x, start.y);
-    CGContextAddQuadCurveToPoint(cxt, control.x, control.y, end.x, end.y);
+    if(self.curveType == SCArrowViewCurveTypeBoth) {
+        CGPoint control1 = [self addVector:start toVector:[self multiplyVector:arrowVect byScalar:1/3.0]];
+        control1 = [self addVector:control1 toVector:arrowPerp];
+        
+        CGPoint control2 = [self addVector:start toVector:[self multiplyVector:arrowVect byScalar:2/3.0]];
+        control2 = [self addVector:control2 toVector:[self multiplyVector:arrowPerp byScalar:-1]];
+        
+        endVector = [self determinePointOnCubicBezierAtPosition:0.95 startPoint:start endPoint:end control1:control1 control2:control2];
+        
+        CGContextAddCurveToPoint(cxt, control1.x, control1.y, control2.x, control2.y, end.x, end.y);
+    } else {
+        if(self.curveType == SCArrowViewCurveTypeLeft) {
+            perpLength *= -1;
+        }
+        
+        CGPoint control = [self addVector:start toVector:[self multiplyVector:arrowVect byScalar:0.5]];
+        control = [self addVector:control toVector:arrowPerp];
+        
+        endVector = [self determinePointOnQuadBezierAtPosition:0.95 startPoint:start endPoint:end controlPoint:control];
+        
+        CGContextAddQuadCurveToPoint(cxt, control.x, control.y, end.x, end.y);
+    }
+    
     [self.color setStroke];
     CGContextSetLineWidth(cxt, self.lineThickness);
     CGContextStrokePath(cxt);
     
     // Now draw the end
-    CGPoint endVector = [self determinePointOnQuadBezierAtPosition:0.95 startPoint:start endPoint:end controlPoint:control];
     endVector.x = endVector.x - end.x;
     endVector.y = endVector.y - end.y;
     
@@ -116,6 +132,19 @@
     CGFloat x = (1-t) * ((1-t) * start.x + t * control.x) + t * ((1-t) * control.x + t * end.x);
     CGFloat y = (1-t) * ((1-t) * start.y + t * control.y) + t * ((1-t) * control.y + t * end.y);
     return CGPointMake(x, y);
+}
+
+- (CGPoint)determinePointOnCubicBezierAtPosition:(CGFloat)t startPoint:(CGPoint)start
+                                        endPoint:(CGPoint)end control1:(CGPoint)c1
+                                        control2:(CGPoint)c2
+{
+    CGPoint part1 = [self determinePointOnQuadBezierAtPosition:t startPoint:start
+                                                      endPoint:c2 controlPoint:c1];
+    CGPoint part2 = [self determinePointOnQuadBezierAtPosition:t startPoint:c1
+                                                      endPoint:end controlPoint:c2];
+    
+    return [self addVector:[self multiplyVector:part1 byScalar:(1-t)]
+                  toVector:[self multiplyVector:part2 byScalar:t]];
 }
 
 - (CGPoint)perpendicularToVector:(CGPoint)vector length:(CGFloat)length
