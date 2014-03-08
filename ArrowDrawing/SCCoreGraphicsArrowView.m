@@ -82,7 +82,6 @@
     
     [self.color setStroke];
     CGContextSetLineWidth(cxt, self.lineThickness);
-    CGContextStrokePath(cxt);
     
     // Now draw the end
     endVector.x = endVector.x - end.x;
@@ -96,6 +95,8 @@
     CGPoint arrowSide1 = [self addVector:footOfArrow toVector:perpVector];
     CGPoint arrowSide2 = [self addVector:footOfArrow toVector:[self multiplyVector:perpVector byScalar:-1]];
     
+    
+    
     // Draw line to point
     CGContextMoveToPoint(cxt, arrowSide1.x, arrowSide1.y);
     CGContextAddLineToPoint(cxt, end.x, end.y);
@@ -103,17 +104,27 @@
     // Then to other out
     CGContextAddLineToPoint(cxt, arrowSide2.x, arrowSide2.y);
     
-    if(self.headType == SCArrowViewHeadTypeTriangle) {
-        CGContextClosePath(cxt);
-    }
-    
-    if(self.headType == SCArrowViewHeadTypeFilled) {
-        [self.color setFill];
-        CGContextFillPath(cxt);
-    }
-    
     // Stroke it
     CGContextStrokePath(cxt);
+    
+    CGPathDrawingMode drawingMode;
+    if(self.headType == SCArrowViewHeadTypeFilled) {
+        drawingMode = kCGPathFillStroke;
+    } else {
+        drawingMode = kCGPathStroke;
+    }
+    
+    [self.color setFill];
+    // Redraw the head
+    CGContextMoveToPoint(cxt, arrowSide1.x, arrowSide1.y);
+    CGContextAddLineToPoint(cxt, end.x, end.y);
+    CGContextAddLineToPoint(cxt, arrowSide2.x, arrowSide2.y);
+    if(self.headType == SCArrowViewHeadTypeTriangle) {
+        CGContextAddLineToPoint(cxt, arrowSide1.x, arrowSide1.y);
+    }
+    CGContextDrawPath(cxt, drawingMode);
+    
+
 
     
 }
