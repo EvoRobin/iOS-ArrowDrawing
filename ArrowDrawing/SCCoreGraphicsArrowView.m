@@ -24,16 +24,16 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = [UIColor clearColor];
         self.from = from;
         self.to = to;
         // Set some defaults
         self.color = [UIColor redColor];
         self.lineThickness = 2.0;
         self.headSize = 30;
-        self.headType = SCArrowViewHeadTypeFilled;
-        self.bendiness = 0.5;
-        self.curveType = SCArrowViewCurveTypeBoth;
+        self.headType = SCArrowViewHeadTypeEdges;
+        self.bendiness = 0.2;
+        self.curveType = SCArrowViewCurveTypeLeft;
     }
     return self;
 }
@@ -44,8 +44,8 @@
     // Drawing code
     CGContextRef cxt = UIGraphicsGetCurrentContext();
     CGContextBeginPath(cxt);
-    CGPoint start = [self convertNormalisedPointToCurrentFrame:self.from];
-    CGPoint end   = [self convertNormalisedPointToCurrentFrame:self.to];
+    CGPoint start = self.from;
+    CGPoint end   = self.to;
     
     // Calculate arrow vector
     CGPoint arrowVect = [self addVector:end toVector:[self multiplyVector:start byScalar:-1]];
@@ -129,13 +129,6 @@
     
 }
 
-- (CGPoint)convertNormalisedPointToCurrentFrame:(CGPoint)normalisedPoint
-{
-    CGPoint nonNormalised;
-    nonNormalised.x = normalisedPoint.x * CGRectGetWidth(self.bounds);
-    nonNormalised.y = normalisedPoint.y * CGRectGetHeight(self.bounds);
-    return nonNormalised;
-}
 
 - (CGPoint)determinePointOnQuadBezierAtPosition:(CGFloat)t startPoint:(CGPoint)start
                                        endPoint:(CGPoint)end controlPoint:(CGPoint)control

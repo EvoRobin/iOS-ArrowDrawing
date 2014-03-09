@@ -11,8 +11,6 @@
 
 @interface SCCoreGraphicsArrowViewController ()
 
-@property (nonatomic, strong) UIView<SCArrowView> *arrowView;
-
 @end
 
 @implementation SCCoreGraphicsArrowViewController
@@ -21,10 +19,26 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    self.arrowView = [[SCCoreGraphicsArrowView alloc] initWithFrame:self.view.bounds
-                                                               from:CGPointMake(0.2, 0.2)
-                                                                 to:CGPointMake(0.8, 0.8)];
-    [self.view addSubview:self.arrowView];
+    
+    NSMutableArray *arrows = [NSMutableArray array];
+    for(int i=0; i<10; i++) {
+        id arrow = [[SCCoreGraphicsArrowView alloc] initWithFrame:self.view.bounds
+                                                            from:CGPointMake(0, (i+1)*40)
+                                                              to:CGPointMake(CGRectGetWidth(self.view.bounds), (i+1)*40)];
+        [self.view addSubview:arrow];
+        [arrows addObject:arrow];
+    }
+    
+    [arrows[1] setBendiness:0.4];
+    [arrows[2] setCurveType:SCArrowViewCurveTypeLeft];
+    [arrows[3] setHeadType:SCArrowViewHeadTypeFilled];
+    [arrows[4] setHeadType:SCArrowViewHeadTypeTriangle];
+    [arrows[5] setColor:[UIColor blueColor]];
+    [arrows[6] setCurveType:SCArrowViewCurveTypeBoth];
+    [arrows[7] setCurveType:SCArrowViewCurveTypeBoth];
+    [arrows[7] setBendiness:0.4];
+    [arrows[8] setLineThickness:5];
+    [arrows[9] setHeadSize:50];
 }
 
 - (void)didReceiveMemoryWarning
