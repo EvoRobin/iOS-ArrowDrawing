@@ -6,9 +6,10 @@
 //  Copyright (c) 2014 Shinobi Controls. All rights reserved.
 //
 
-#import "SCVectorUtils.h"
+#import "SCCurveUtils.h"
+#import "SC2DVector.h"
 
-@implementation SCVectorUtils
+@implementation SCCurveUtils
 
 + (CGPoint)determinePointOnQuadBezierAtPosition:(CGFloat)t startPoint:(CGPoint)start
                                        endPoint:(CGPoint)end controlPoint:(CGPoint)control
@@ -27,40 +28,10 @@
     CGPoint part2 = [self determinePointOnQuadBezierAtPosition:t startPoint:c1
                                                       endPoint:end controlPoint:c2];
     
-    return [self addVector:[self multiplyVector:part1 byScalar:(1-t)]
-                  toVector:[self multiplyVector:part2 byScalar:t]];
-}
-
-+ (CGPoint)perpendicularToVector:(CGPoint)vector length:(CGFloat)length
-{
-    CGPoint perpVector;
-    perpVector.x =   vector.y;
-    perpVector.y = - vector.x;
-    return [self resizeVector:perpVector length:length];
-}
-
-+ (CGPoint)resizeVector:(CGPoint)vector length:(CGFloat)length
-{
-    CGFloat currentLength = [self vectorLength:vector];
-    return [self multiplyVector:vector byScalar:(length / currentLength)];
-}
-
-+ (CGFloat)vectorLength:(CGPoint)vector
-{
-    return sqrt(vector.x * vector.x + vector.y * vector.y);
-}
-
-+ (CGPoint)addVector:(CGPoint)v1 toVector:(CGPoint)v2
-{
-    CGPoint sum;
-    sum.x = v1.x + v2.x;
-    sum.y = v1.y + v2.y;
-    return sum;
-}
-
-+ (CGPoint)multiplyVector:(CGPoint)vector byScalar:(CGFloat)scalar
-{
-    return CGPointMake(vector.x * scalar, vector.y * scalar);
+    SC2DVector *v1 = [SC2DVector vectorWithPoint:part1];
+    SC2DVector *v2 = [SC2DVector vectorWithPoint:part2];
+    
+    return [[[v1 multiplyByScalar:(1-t)] addVector:[v2 multiplyByScalar:t]] point];
 }
 
 @end

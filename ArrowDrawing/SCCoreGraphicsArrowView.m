@@ -7,7 +7,8 @@
 //
 
 #import "SCCoreGraphicsArrowView.h"
-#import "SCVectorUtils.h"
+#import "SCCurveUtils.h"
+#import "SC2DVector.h"
 
 @implementation SCCoreGraphicsArrowView
 
@@ -45,38 +46,45 @@
     // Drawing code
     CGContextRef cxt = UIGraphicsGetCurrentContext();
     CGContextBeginPath(cxt);
-    CGPoint start = self.from;
-    CGPoint end   = self.to;
+    SC2DVector *start = [SC2DVector vectorWithPoint:self.from];
+    SC2DVector *end   = [SC2DVector vectorWithPoint:self.to];
     
     // Calculate arrow vector
-    CGPoint arrowVect = [SCVectorUtils addVector:end toVector:[SCVectorUtils multiplyVector:start byScalar:-1]];
+    SC2DVector *arrowVect = [end addVector:[start multiplyByScalar:-1]];
     CGContextMoveToPoint(cxt, start.x, start.y);
     // How bendy?
-    CGFloat perpLength = self.bendiness * [SCVectorUtils vectorLength:arrowVect];
+    CGFloat perpLength = self.bendiness * [arrowVect length];
     // Calculate perpendicular
-    CGPoint arrowPerp = [SCVectorUtils perpendicularToVector:arrowVect length:perpLength];
+    SC2DVector *arrowPerp = [arrowVect perpendicularVectorOfLength:perpLength];
+    
     // In preparation for the head
-    CGPoint endVector;
+    CGPoint nearEnd;
     
     if(self.curveType == SCArrowViewCurveTypeBoth) {
-        CGPoint control1 = [SCVectorUtils addVector:start toVector:[SCVectorUtils multiplyVector:arrowVect byScalar:1/3.0]];
-        control1 = [SCVectorUtils addVector:control1 toVector:arrowPerp];
+
+        SC2DVector *c1 = [[start addVector:[arrowVect multiplyByScalar:1/3.0]] addVector:arrowPerp];
+        SC2DVector *c2 = [[start addVector:[arrowVect multiplyByScalar:2/3.0]] addVector:[arrowPerp multiplyByScalar:-1]];
+
         
-        CGPoint control2 = [SCVectorUtils addVector:start toVector:[SCVectorUtils multiplyVector:arrowVect byScalar:2/3.0]];
-        control2 = [SCVectorUtils addVector:control2 toVector:[SCVectorUtils multiplyVector:arrowPerp byScalar:-1]];
+        nearEnd = [SCCurveUtils determinePointOnCubicBezierAtPosition:0.95
+                                                                   startPoint:start.point
+                                                                     endPoint:end.point
+                                                                     control1:c1.point
+                                                                     control2:c2.point];
         
-        endVector = [SCVectorUtils determinePointOnCubicBezierAtPosition:0.95 startPoint:start endPoint:end control1:control1 control2:control2];
         
-        CGContextAddCurveToPoint(cxt, control1.x, control1.y, control2.x, control2.y, end.x, end.y);
+        CGContextAddCurveToPoint(cxt, c1.x, c1.y, c2.x, c2.y, end.x, end.y);
     } else {
         if(self.curveType == SCArrowViewCurveTypeLeft) {
-            perpLength *= -1;
+            arrowPerp = [arrowPerp multiplyByScalar:-1];
         }
         
-        CGPoint control = [SCVectorUtils addVector:start toVector:[SCVectorUtils multiplyVector:arrowVect byScalar:0.5]];
-        control = [SCVectorUtils addVector:control toVector:arrowPerp];
+        SC2DVector *control = [[start addVector:[arrowVect multiplyByScalar:0.5]] addVector:arrowPerp];
         
-        endVector = [SCVectorUtils determinePointOnQuadBezierAtPosition:0.95 startPoint:start endPoint:end controlPoint:control];
+        nearEnd = [SCCurveUtils determinePointOnQuadBezierAtPosition:0.95
+                                                          startPoint:start.point
+                                                                    endPoint:end.point
+                                                                controlPoint:control.point];
         
         CGContextAddQuadCurveToPoint(cxt, control.x, control.y, end.x, end.y);
     }
@@ -85,19 +93,17 @@
     CGContextSetLineWidth(cxt, self.lineThickness);
     
     // Now draw the end
-    endVector.x = endVector.x - end.x;
-    endVector.y = endVector.y - end.y;
+    SC2DVector *endV = [end addVector:[[SC2DVector vectorWithPoint:nearEnd] multiplyByScalar:-1]];
     
     // Out at right angles
-    CGPoint perpVector = [SCVectorUtils perpendicularToVector:endVector length:self.headSize * 0.4];
+    SC2DVector *perpVector = [endV perpendicularVectorOfLength:self.headSize * 0.4];
 
     // Back from tip
-    CGPoint footOfArrow = [SCVectorUtils addVector:end toVector:[SCVectorUtils resizeVector:endVector length:self.headSize]];
-    CGPoint arrowSide1 = [SCVectorUtils addVector:footOfArrow toVector:perpVector];
-    CGPoint arrowSide2 = [SCVectorUtils addVector:footOfArrow toVector:[SCVectorUtils multiplyVector:perpVector byScalar:-1]];
+    SC2DVector *footOfArrow = [end addVector:[endV normalisedToLength:-self.headSize]];
+    SC2DVector *arrowSide1 = [footOfArrow addVector:perpVector];
+    SC2DVector *arrowSide2 = [footOfArrow addVector:[perpVector multiplyByScalar:-1]];
     
-    
-    
+
     // Draw line to point
     CGContextMoveToPoint(cxt, arrowSide1.x, arrowSide1.y);
     CGContextAddLineToPoint(cxt, end.x, end.y);

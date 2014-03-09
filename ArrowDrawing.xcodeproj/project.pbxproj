@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		227472FF18CC7C1A002DD2C1 /* SCVectorUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 227472FE18CC7C1A002DD2C1 /* SCVectorUtils.m */; };
+		227472FF18CC7C1A002DD2C1 /* SCCurveUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 227472FE18CC7C1A002DD2C1 /* SCCurveUtils.m */; };
+		2274730218CC7E48002DD2C1 /* SC2DVector.m in Sources */ = {isa = PBXBuildFile; fileRef = 2274730118CC7E48002DD2C1 /* SC2DVector.m */; };
 		F41A176A18C74A9F003E4C94 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F41A176918C74A9F003E4C94 /* Foundation.framework */; };
 		F41A176C18C74A9F003E4C94 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F41A176B18C74A9F003E4C94 /* CoreGraphics.framework */; };
 		F41A176E18C74A9F003E4C94 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F41A176D18C74A9F003E4C94 /* UIKit.framework */; };
@@ -37,8 +38,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		227472FD18CC7C1A002DD2C1 /* SCVectorUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCVectorUtils.h; sourceTree = "<group>"; };
-		227472FE18CC7C1A002DD2C1 /* SCVectorUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCVectorUtils.m; sourceTree = "<group>"; };
+		227472FD18CC7C1A002DD2C1 /* SCCurveUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCurveUtils.h; sourceTree = "<group>"; };
+		227472FE18CC7C1A002DD2C1 /* SCCurveUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCurveUtils.m; sourceTree = "<group>"; };
+		2274730018CC7E48002DD2C1 /* SC2DVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SC2DVector.h; sourceTree = "<group>"; };
+		2274730118CC7E48002DD2C1 /* SC2DVector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SC2DVector.m; sourceTree = "<group>"; };
 		F41A176618C74A9F003E4C94 /* ArrowDrawing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArrowDrawing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F41A176918C74A9F003E4C94 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F41A176B18C74A9F003E4C94 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -92,8 +95,10 @@
 		227472FC18CC7C00002DD2C1 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				227472FD18CC7C1A002DD2C1 /* SCVectorUtils.h */,
-				227472FE18CC7C1A002DD2C1 /* SCVectorUtils.m */,
+				227472FD18CC7C1A002DD2C1 /* SCCurveUtils.h */,
+				227472FE18CC7C1A002DD2C1 /* SCCurveUtils.m */,
+				2274730018CC7E48002DD2C1 /* SC2DVector.h */,
+				2274730118CC7E48002DD2C1 /* SC2DVector.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -306,8 +311,9 @@
 			files = (
 				F41A178318C74A9F003E4C94 /* SCCoreAnimationArrowViewController.m in Sources */,
 				F41A178018C74A9F003E4C94 /* SCCoreGraphicsArrowViewController.m in Sources */,
-				227472FF18CC7C1A002DD2C1 /* SCVectorUtils.m in Sources */,
+				227472FF18CC7C1A002DD2C1 /* SCCurveUtils.m in Sources */,
 				F41A17A418C7862A003E4C94 /* SCCoreGraphicsArrowView.m in Sources */,
+				2274730218CC7E48002DD2C1 /* SC2DVector.m in Sources */,
 				F41A177A18C74A9F003E4C94 /* SCAppDelegate.m in Sources */,
 				F41A177618C74A9F003E4C94 /* main.m in Sources */,
 			);

@@ -30,7 +30,7 @@
     }
     
     [arrows[1] setBendiness:0.4];
-    [arrows[2] setCurveType:SCArrowViewCurveTypeLeft];
+    [arrows[2] setCurveType:SCArrowViewCurveTypeRight];
     [arrows[3] setHeadType:SCArrowViewHeadTypeFilled];
     [arrows[4] setHeadType:SCArrowViewHeadTypeTriangle];
     [arrows[5] setColor:[UIColor blueColor]];
