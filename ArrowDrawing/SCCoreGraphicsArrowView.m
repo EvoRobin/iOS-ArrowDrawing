@@ -10,6 +10,7 @@
 #import "SCCurveUtils.h"
 #import "SC2DVector.h"
 #import "SCArrowPathQuad.h"
+#import "SCArrowPathCubic.h"
 
 @implementation SCCoreGraphicsArrowView
 
@@ -48,42 +49,20 @@
     CGContextRef cxt = UIGraphicsGetCurrentContext();
     CGContextBeginPath(cxt);
     
-    // In preparation for the head
+    // Which kind of path are we going to use?
     SCArrowPath *arrowPath;
     
     if(self.curveType == SCArrowViewCurveTypeBoth) {
-        SC2DVector *start = [SC2DVector vectorWithPoint:self.from];
-        SC2DVector *end   = [SC2DVector vectorWithPoint:self.to];
-        
-        // Calculate arrow vector
-        SC2DVector *arrowVect = [end addVector:[start multiplyByScalar:-1]];
-        CGContextMoveToPoint(cxt, start.x, start.y);
-        // How bendy?
-        CGFloat perpLength = self.bendiness * [arrowVect length];
-        // Calculate perpendicular
-        SC2DVector *arrowPerp = [arrowVect perpendicularVectorOfLength:perpLength];
-
-        SC2DVector *c1 = [[start addVector:[arrowVect multiplyByScalar:1/3.0]] addVector:arrowPerp];
-        SC2DVector *c2 = [[start addVector:[arrowVect multiplyByScalar:2/3.0]] addVector:[arrowPerp multiplyByScalar:-1]];
-
-        
-        CGPoint nearEnd = [SCCurveUtils determinePointOnCubicBezierAtPosition:0.95
-                                                                   startPoint:start.point
-                                                                     endPoint:end.point
-                                                                     control1:c1.point
-                                                                     control2:c2.point];
-        
-        
-        CGContextAddCurveToPoint(cxt, c1.x, c1.y, c2.x, c2.y, end.x, end.y);
+        arrowPath = [[SCArrowPathCubic alloc] initWithStart:self.from end:self.to];
     } else {
         arrowPath = [[SCArrowPathQuad alloc] initWithStart:self.from end:self.to];
-        arrowPath.bendiness = self.bendiness;
         if(self.curveType == SCArrowViewCurveTypeLeft) {
             ((SCArrowPathQuad*)arrowPath).leftHandedCurve = YES;
         }
-        
-        CGContextAddPath(cxt, [arrowPath arrowPath]);
     }
+    
+    arrowPath.bendiness = self.bendiness;
+    CGContextAddPath(cxt, [arrowPath arrowPath]);
     
     [self.color setStroke];
     CGContextSetLineWidth(cxt, self.lineThickness);
