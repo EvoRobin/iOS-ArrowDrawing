@@ -25,6 +25,9 @@
 		F41A179618C74A9F003E4C94 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F41A179418C74A9F003E4C94 /* InfoPlist.strings */; };
 		F41A179818C74A9F003E4C94 /* ArrowDrawingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F41A179718C74A9F003E4C94 /* ArrowDrawingTests.m */; };
 		F41A17A418C7862A003E4C94 /* SCCoreGraphicsArrowView.m in Sources */ = {isa = PBXBuildFile; fileRef = F41A17A318C7862A003E4C94 /* SCCoreGraphicsArrowView.m */; };
+		F41A17AD18CE16E1003E4C94 /* SCArrowPathQuad.m in Sources */ = {isa = PBXBuildFile; fileRef = F41A17AC18CE16E1003E4C94 /* SCArrowPathQuad.m */; };
+		F41A17B018CE16F3003E4C94 /* SCArrowPath.m in Sources */ = {isa = PBXBuildFile; fileRef = F41A17AF18CE16F3003E4C94 /* SCArrowPath.m */; };
+		F41A17B318CE1700003E4C94 /* SCArrowPathCubic.m in Sources */ = {isa = PBXBuildFile; fileRef = F41A17B218CE1700003E4C94 /* SCArrowPathCubic.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +69,12 @@
 		F41A17A218C7862A003E4C94 /* SCCoreGraphicsArrowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCoreGraphicsArrowView.h; sourceTree = "<group>"; };
 		F41A17A318C7862A003E4C94 /* SCCoreGraphicsArrowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCoreGraphicsArrowView.m; sourceTree = "<group>"; };
 		F41A17A518C8A130003E4C94 /* SCArrowView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCArrowView.h; sourceTree = "<group>"; };
+		F41A17AB18CE16E1003E4C94 /* SCArrowPathQuad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCArrowPathQuad.h; sourceTree = "<group>"; };
+		F41A17AC18CE16E1003E4C94 /* SCArrowPathQuad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCArrowPathQuad.m; sourceTree = "<group>"; };
+		F41A17AE18CE16F3003E4C94 /* SCArrowPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCArrowPath.h; sourceTree = "<group>"; };
+		F41A17AF18CE16F3003E4C94 /* SCArrowPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCArrowPath.m; sourceTree = "<group>"; };
+		F41A17B118CE1700003E4C94 /* SCArrowPathCubic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCArrowPathCubic.h; sourceTree = "<group>"; };
+		F41A17B218CE1700003E4C94 /* SCArrowPathCubic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCArrowPathCubic.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +148,8 @@
 		F41A176F18C74A9F003E4C94 /* ArrowDrawing */ = {
 			isa = PBXGroup;
 			children = (
+				F41A17B418CE22E0003E4C94 /* ArrowHeads */,
+				F41A17AA18CE1660003E4C94 /* ArrowPaths */,
 				227472FC18CC7C00002DD2C1 /* Utils */,
 				F41A17A518C8A130003E4C94 /* SCArrowView.h */,
 				F41A17A118C75FC4003E4C94 /* CoreGraphics Arrows */,
@@ -191,6 +202,26 @@
 				F41A17A318C7862A003E4C94 /* SCCoreGraphicsArrowView.m */,
 			);
 			name = "CoreGraphics Arrows";
+			sourceTree = "<group>";
+		};
+		F41A17AA18CE1660003E4C94 /* ArrowPaths */ = {
+			isa = PBXGroup;
+			children = (
+				F41A17AE18CE16F3003E4C94 /* SCArrowPath.h */,
+				F41A17AF18CE16F3003E4C94 /* SCArrowPath.m */,
+				F41A17B118CE1700003E4C94 /* SCArrowPathCubic.h */,
+				F41A17B218CE1700003E4C94 /* SCArrowPathCubic.m */,
+				F41A17AB18CE16E1003E4C94 /* SCArrowPathQuad.h */,
+				F41A17AC18CE16E1003E4C94 /* SCArrowPathQuad.m */,
+			);
+			name = ArrowPaths;
+			sourceTree = "<group>";
+		};
+		F41A17B418CE22E0003E4C94 /* ArrowHeads */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = ArrowHeads;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -310,9 +341,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				F41A178318C74A9F003E4C94 /* SCCoreAnimationArrowViewController.m in Sources */,
+				F41A17AD18CE16E1003E4C94 /* SCArrowPathQuad.m in Sources */,
+				F41A17B318CE1700003E4C94 /* SCArrowPathCubic.m in Sources */,
 				F41A178018C74A9F003E4C94 /* SCCoreGraphicsArrowViewController.m in Sources */,
 				227472FF18CC7C1A002DD2C1 /* SCCurveUtils.m in Sources */,
 				F41A17A418C7862A003E4C94 /* SCCoreGraphicsArrowView.m in Sources */,
+				F41A17B018CE16F3003E4C94 /* SCArrowPath.m in Sources */,
 				2274730218CC7E48002DD2C1 /* SC2DVector.m in Sources */,
 				F41A177A18C74A9F003E4C94 /* SCAppDelegate.m in Sources */,
 				F41A177618C74A9F003E4C94 /* main.m in Sources */,

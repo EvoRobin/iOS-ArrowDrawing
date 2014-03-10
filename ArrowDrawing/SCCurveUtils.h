@@ -18,6 +18,4 @@
                                         endPoint:(CGPoint)end control1:(CGPoint)c1
                                         control2:(CGPoint)c2;
 
-
-
 @end

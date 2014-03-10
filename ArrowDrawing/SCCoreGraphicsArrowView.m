@@ -9,6 +9,7 @@
 #import "SCCoreGraphicsArrowView.h"
 #import "SCCurveUtils.h"
 #import "SC2DVector.h"
+#import "SCArrowPathQuad.h"
 
 @implementation SCCoreGraphicsArrowView
 
@@ -46,27 +47,27 @@
     // Drawing code
     CGContextRef cxt = UIGraphicsGetCurrentContext();
     CGContextBeginPath(cxt);
-    SC2DVector *start = [SC2DVector vectorWithPoint:self.from];
-    SC2DVector *end   = [SC2DVector vectorWithPoint:self.to];
-    
-    // Calculate arrow vector
-    SC2DVector *arrowVect = [end addVector:[start multiplyByScalar:-1]];
-    CGContextMoveToPoint(cxt, start.x, start.y);
-    // How bendy?
-    CGFloat perpLength = self.bendiness * [arrowVect length];
-    // Calculate perpendicular
-    SC2DVector *arrowPerp = [arrowVect perpendicularVectorOfLength:perpLength];
     
     // In preparation for the head
-    CGPoint nearEnd;
+    SCArrowPath *arrowPath;
     
     if(self.curveType == SCArrowViewCurveTypeBoth) {
+        SC2DVector *start = [SC2DVector vectorWithPoint:self.from];
+        SC2DVector *end   = [SC2DVector vectorWithPoint:self.to];
+        
+        // Calculate arrow vector
+        SC2DVector *arrowVect = [end addVector:[start multiplyByScalar:-1]];
+        CGContextMoveToPoint(cxt, start.x, start.y);
+        // How bendy?
+        CGFloat perpLength = self.bendiness * [arrowVect length];
+        // Calculate perpendicular
+        SC2DVector *arrowPerp = [arrowVect perpendicularVectorOfLength:perpLength];
 
         SC2DVector *c1 = [[start addVector:[arrowVect multiplyByScalar:1/3.0]] addVector:arrowPerp];
         SC2DVector *c2 = [[start addVector:[arrowVect multiplyByScalar:2/3.0]] addVector:[arrowPerp multiplyByScalar:-1]];
 
         
-        nearEnd = [SCCurveUtils determinePointOnCubicBezierAtPosition:0.95
+        CGPoint nearEnd = [SCCurveUtils determinePointOnCubicBezierAtPosition:0.95
                                                                    startPoint:start.point
                                                                      endPoint:end.point
                                                                      control1:c1.point
@@ -75,61 +76,61 @@
         
         CGContextAddCurveToPoint(cxt, c1.x, c1.y, c2.x, c2.y, end.x, end.y);
     } else {
+        arrowPath = [[SCArrowPathQuad alloc] initWithStart:self.from end:self.to];
+        arrowPath.bendiness = self.bendiness;
         if(self.curveType == SCArrowViewCurveTypeLeft) {
-            arrowPerp = [arrowPerp multiplyByScalar:-1];
+            ((SCArrowPathQuad*)arrowPath).leftHandedCurve = YES;
         }
         
-        SC2DVector *control = [[start addVector:[arrowVect multiplyByScalar:0.5]] addVector:arrowPerp];
-        
-        nearEnd = [SCCurveUtils determinePointOnQuadBezierAtPosition:0.95
-                                                          startPoint:start.point
-                                                                    endPoint:end.point
-                                                                controlPoint:control.point];
-        
-        CGContextAddQuadCurveToPoint(cxt, control.x, control.y, end.x, end.y);
+        CGContextAddPath(cxt, [arrowPath arrowPath]);
     }
     
     [self.color setStroke];
     CGContextSetLineWidth(cxt, self.lineThickness);
     
-    // Now draw the end
-    SC2DVector *endV = [end addVector:[[SC2DVector vectorWithPoint:nearEnd] multiplyByScalar:-1]];
-    
-    // Out at right angles
-    SC2DVector *perpVector = [endV perpendicularVectorOfLength:self.headSize * 0.4];
+    if(arrowPath) {
+        // Now draw the end
+        SC2DVector *endV = [arrowPath directionAtEnd];
+        
+        // Out at right angles
+        SC2DVector *perpVector = [endV perpendicularVectorOfLength:self.headSize * 0.4];
 
-    // Back from tip
-    SC2DVector *footOfArrow = [end addVector:[endV normalisedToLength:-self.headSize]];
-    SC2DVector *arrowSide1 = [footOfArrow addVector:perpVector];
-    SC2DVector *arrowSide2 = [footOfArrow addVector:[perpVector multiplyByScalar:-1]];
-    
+        // Back from tip
+        SC2DVector *footOfArrow = [[SC2DVector vectorWithPoint:self.to] addVector:[endV normalisedToLength:-self.headSize]];
+        SC2DVector *arrowSide1 = [footOfArrow addVector:perpVector];
+        SC2DVector *arrowSide2 = [footOfArrow addVector:[perpVector multiplyByScalar:-1]];
+        
 
-    // Draw line to point
-    CGContextMoveToPoint(cxt, arrowSide1.x, arrowSide1.y);
-    CGContextAddLineToPoint(cxt, end.x, end.y);
-    
-    // Then to other out
-    CGContextAddLineToPoint(cxt, arrowSide2.x, arrowSide2.y);
-    
-    // Stroke it
-    CGContextStrokePath(cxt);
-    
-    CGPathDrawingMode drawingMode;
-    if(self.headType == SCArrowViewHeadTypeFilled) {
-        drawingMode = kCGPathFillStroke;
+        // Draw line to point
+        CGContextMoveToPoint(cxt, arrowSide1.x, arrowSide1.y);
+        CGContextAddLineToPoint(cxt, self.to.x, self.to.y);
+        
+        // Then to other out
+        CGContextAddLineToPoint(cxt, arrowSide2.x, arrowSide2.y);
+        
+        
+        // Stroke it
+        CGContextStrokePath(cxt);
+        
+        CGPathDrawingMode drawingMode;
+        if(self.headType == SCArrowViewHeadTypeFilled) {
+            drawingMode = kCGPathFillStroke;
+        } else {
+            drawingMode = kCGPathStroke;
+        }
+        
+        [self.color setFill];
+        // Redraw the head
+        CGContextMoveToPoint(cxt, arrowSide1.x, arrowSide1.y);
+        CGContextAddLineToPoint(cxt, self.to.x, self.to.y);
+        CGContextAddLineToPoint(cxt, arrowSide2.x, arrowSide2.y);
+        if(self.headType == SCArrowViewHeadTypeTriangle) {
+            CGContextAddLineToPoint(cxt, arrowSide1.x, arrowSide1.y);
+        }
+        CGContextDrawPath(cxt, drawingMode);
     } else {
-        drawingMode = kCGPathStroke;
+        CGContextStrokePath(cxt);
     }
-    
-    [self.color setFill];
-    // Redraw the head
-    CGContextMoveToPoint(cxt, arrowSide1.x, arrowSide1.y);
-    CGContextAddLineToPoint(cxt, end.x, end.y);
-    CGContextAddLineToPoint(cxt, arrowSide2.x, arrowSide2.y);
-    if(self.headType == SCArrowViewHeadTypeTriangle) {
-        CGContextAddLineToPoint(cxt, arrowSide1.x, arrowSide1.y);
-    }
-    CGContextDrawPath(cxt, drawingMode);
     
 }
 
