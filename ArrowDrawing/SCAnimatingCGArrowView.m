@@ -25,7 +25,7 @@ _##PROPERTY = PROPERTY; \
 
 @property (nonatomic, strong) CADisplayLink *timer;
 @property (nonatomic, assign) CGPoint currentEnd;
-@property (nonatomic, assign) BOOL shouldAnimate;
+@property (nonatomic, assign) BOOL animating;
 @property (nonatomic, assign) CFTimeInterval animationStartTime;
 
 @end
@@ -58,7 +58,7 @@ GENERATE_SETTER_WITH_SETNEEDSDISPLAY(headType, SCArrowViewHeadType, setHeadType)
         self.bendiness = 0.2;
         self.curveType = SCArrowViewCurveTypeLeft;
         self.animationTime = 2;
-        [self animationUpdate:nil];
+        self.animating = NO;
     }
     return self;
 }
@@ -66,6 +66,14 @@ GENERATE_SETTER_WITH_SETNEEDSDISPLAY(headType, SCArrowViewHeadType, setHeadType)
 
 - (void)drawRect:(CGRect)rect
 {
+    if(!self.animating) {
+        // Let's actually start off an animation process
+        [self animationUpdate:nil];
+        // Don't draw anything now - we'll do it on the next run loop
+        return;
+    }
+    self.animating = NO;
+    
     // Some local path variables
     CGPathRef arrowCGPath;
     CGPathRef headCGPath;
@@ -131,7 +139,11 @@ GENERATE_SETTER_WITH_SETNEEDSDISPLAY(headType, SCArrowViewHeadType, setHeadType)
 
 - (void)animationUpdate:(CADisplayLink *)sender
 {
-    if(!sender) {
+    self.animating = YES;
+    
+    if(!self.timer) {
+        self.timer = [CADisplayLink displayLinkWithTarget:self selector:@selector(animationUpdate:)];
+        [self.timer addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
         self.animationStartTime = CACurrentMediaTime();
     }
     
@@ -139,18 +151,11 @@ GENERATE_SETTER_WITH_SETNEEDSDISPLAY(headType, SCArrowViewHeadType, setHeadType)
     
     if(proportionComplete >= 1) {
         self.currentEnd = self.to;
-        self.shouldAnimate = NO;
         [self.timer invalidate];
         self.timer = nil;
     } else {
-        self.shouldAnimate = YES;
         self.currentEnd = CGPointMake((self.to.x - self.from.x) * proportionComplete + self.from.x,
                                       (self.to.y - self.from.y) * proportionComplete + self.from.y);
-        // And prepare to be called back in the future
-        if(!self.timer) {
-            self.timer = [CADisplayLink displayLinkWithTarget:self selector:@selector(animationUpdate:)];
-            [self.timer addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-        }
     }
     
     [self setNeedsDisplay];
