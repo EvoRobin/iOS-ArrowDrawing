@@ -109,6 +109,54 @@
     CGPathRelease(headCGPath);
 }
 
+#pragma mark - Property setters
+- (void)setFrom:(CGPoint)from
+{
+    _from = from;
+    [self setNeedsDisplay];
+}
+
+- (void)setTo:(CGPoint)to
+{
+    _to = to;
+    [self setNeedsDisplay];
+}
+
+- (void)setColor:(UIColor *)color
+{
+    _color = color;
+    [self setNeedsDisplay];
+}
+
+- (void)setLineThickness:(CGFloat)lineThickness
+{
+    _lineThickness = lineThickness;
+    [self setNeedsDisplay];
+}
+
+- (void)setHeadSize:(CGFloat)headSize
+{
+    _headSize = headSize;
+    [self setNeedsDisplay];
+}
+
+- (void)setHeadType:(SCArrowViewHeadType)headType
+{
+    _headType = headType;
+    [self setNeedsDisplay];
+}
+
+- (void)setBendiness:(CGFloat)bendiness
+{
+    _bendiness = bendiness;
+    [self setNeedsDisplay];
+}
+
+- (void)setCurveType:(SCArrowViewCurveType)curveType
+{
+    _curveType = curveType;
+    [self setNeedsDisplay];
+}
 
 
 

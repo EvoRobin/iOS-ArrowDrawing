@@ -83,4 +83,54 @@
     LAYER.path = path.CGPath;
 }
 
+
+#pragma mark - Property setters
+- (void)setFrom:(CGPoint)from
+{
+    _from = from;
+    [self updateArrowLayer];
+}
+
+- (void)setTo:(CGPoint)to
+{
+    _to = to;
+    [self updateArrowLayer];
+}
+
+- (void)setColor:(UIColor *)color
+{
+    _color = color;
+    LAYER.strokeColor = color.CGColor;
+}
+
+- (void)setLineThickness:(CGFloat)lineThickness
+{
+    _lineThickness = lineThickness;
+    LAYER.lineWidth = lineThickness;
+}
+
+- (void)setHeadSize:(CGFloat)headSize
+{
+    _headSize = headSize;
+    [self updateArrowLayer];
+}
+
+- (void)setHeadType:(SCArrowViewHeadType)headType
+{
+    _headType = headType;
+    [self updateArrowLayer];
+}
+
+- (void)setBendiness:(CGFloat)bendiness
+{
+    _bendiness = bendiness;
+    [self updateArrowLayer];
+}
+
+- (void)setCurveType:(SCArrowViewCurveType)curveType
+{
+    _curveType = curveType;
+    [self updateArrowLayer];
+}
+
 @end
