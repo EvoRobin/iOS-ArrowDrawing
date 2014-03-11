@@ -23,8 +23,8 @@
     NSMutableArray *arrows = [NSMutableArray array];
     for(int i=0; i<10; i++) {
         id arrow = [[SCCoreGraphicsArrowView alloc] initWithFrame:self.view.bounds
-                                                            from:CGPointMake(0, (i+1)*40)
-                                                              to:CGPointMake(CGRectGetWidth(self.view.bounds), (i+1)*40)];
+                                                            from:CGPointMake(10, (i+1)*40)
+                                                              to:CGPointMake(CGRectGetWidth(self.view.bounds)-10, (i+1)*40)];
         [self.view addSubview:arrow];
         [arrows addObject:arrow];
     }
