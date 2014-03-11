@@ -12,24 +12,31 @@
 #import "SCArrowHead.h"
 
 #define LAYER ((CAShapeLayer*)self.layer)
-#define GENERATE_SETTER_WITH_LAYER_REDRAW(PROPERTY, TYPE, SETTER) \
+#define GENERATE_SETTER_WITH_LAYER_REDRAW(PROPERTY, TYPE, SETTER, UPDATE_METHOD) \
 @synthesize PROPERTY = _##PROPERTY; \
 \
 - (void)SETTER:(TYPE)PROPERTY { \
 _##PROPERTY = PROPERTY; \
-[self updateArrowLayer]; \
+[self UPDATE_METHOD]; \
 }
+
+@interface SCCoreAnimationArrowView ()
+
+@property (nonatomic, strong) CAShapeLayer *arrowHeadLayer;
+@property (nonatomic, strong) SCArrowPath *arrowPath;
+
+@end
 
 
 @implementation SCCoreAnimationArrowView
 
 // Properties whose setters require a redraw of the layer
-GENERATE_SETTER_WITH_LAYER_REDRAW(bendiness, CGFloat, setBendiness)
-GENERATE_SETTER_WITH_LAYER_REDRAW(curveType, SCArrowViewCurveType, setCurveType)
-GENERATE_SETTER_WITH_LAYER_REDRAW(from, CGPoint, setFrom)
-GENERATE_SETTER_WITH_LAYER_REDRAW(to, CGPoint, setTo)
-GENERATE_SETTER_WITH_LAYER_REDRAW(headSize, CGFloat, setHeadSize)
-GENERATE_SETTER_WITH_LAYER_REDRAW(headType, SCArrowViewHeadType, setHeadType)
+GENERATE_SETTER_WITH_LAYER_REDRAW(bendiness, CGFloat, setBendiness, updateArrowLayer)
+GENERATE_SETTER_WITH_LAYER_REDRAW(curveType, SCArrowViewCurveType, setCurveType, updateArrowLayer)
+GENERATE_SETTER_WITH_LAYER_REDRAW(from, CGPoint, setFrom, updateArrowLayer)
+GENERATE_SETTER_WITH_LAYER_REDRAW(to, CGPoint, setTo, updateArrowLayer)
+GENERATE_SETTER_WITH_LAYER_REDRAW(headSize, CGFloat, setHeadSize, updateArrowHead)
+GENERATE_SETTER_WITH_LAYER_REDRAW(headType, SCArrowViewHeadType, setHeadType, updateArrowHead)
 
 // Other properties
 @synthesize lineThickness = _lineThickness;
@@ -39,14 +46,16 @@ GENERATE_SETTER_WITH_LAYER_REDRAW(headType, SCArrowViewHeadType, setHeadType)
 {
     _color = color;
     LAYER.strokeColor = color.CGColor;
+    self.arrowHeadLayer.strokeColor = color.CGColor;
+    [self updateHeadType];
 }
 
 - (void)setLineThickness:(CGFloat)lineThickness
 {
     _lineThickness = lineThickness;
     LAYER.lineWidth = lineThickness;
+    self.arrowHeadLayer.lineWidth = lineThickness;
 }
-
 
 + (Class)layerClass
 {
@@ -84,27 +93,64 @@ GENERATE_SETTER_WITH_LAYER_REDRAW(headType, SCArrowViewHeadType, setHeadType)
     LAYER.fillColor = nil; // Don't allow filling for now
     
     // Create the path of the arrow
-    SCArrowPath *arrowPath;
     if(self.curveType == SCArrowViewCurveTypeBoth) {
-        arrowPath = [[SCArrowPathCubic alloc] initWithStart:self.from end:self.to];
+        self.arrowPath = [[SCArrowPathCubic alloc] initWithStart:self.from end:self.to];
     } else {
-        arrowPath = [[SCArrowPathQuad alloc] initWithStart:self.from end:self.to];
+        self.arrowPath = [[SCArrowPathQuad alloc] initWithStart:self.from end:self.to];
         if(self.curveType == SCArrowViewCurveTypeLeft) {
-            ((SCArrowPathQuad*)arrowPath).leftHandedCurve = YES;
+            ((SCArrowPathQuad*)self.arrowPath).leftHandedCurve = YES;
         }
     }
-    arrowPath.bendiness = self.bendiness;
+    self.arrowPath.bendiness = self.bendiness;
     
-    UIBezierPath *path = [arrowPath arrowBezierPath];
+    UIBezierPath *path = [self.arrowPath arrowBezierPath];
     
     // Now draw the end
-    SC2DVector *endV = [arrowPath directionAtEnd];
+    SC2DVector *endV = [self.arrowPath directionAtEnd];
     SCArrowHead *arrowHead = [[SCArrowHead alloc] initWithDirection:endV tip:self.to size:self.headSize];
     
     // Add the path
     [path appendPath:[arrowHead arrowHeadBezierPath]];
 
     LAYER.path = path.CGPath;
+    
+    // Also need to update the head
+    [self updateArrowHead];
+}
+
+- (void)updateArrowHead
+{
+    if(!self.arrowHeadLayer) {
+        self.arrowHeadLayer = [CAShapeLayer layer];
+        [self.layer addSublayer:self.arrowHeadLayer];
+    }
+    // Check the size and position
+    self.arrowHeadLayer.bounds = self.bounds;
+    self.arrowHeadLayer.position = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
+    
+    // Create the head
+    SC2DVector *endV = [self.arrowPath directionAtEnd];
+    SCArrowHead *arrowHead = [[SCArrowHead alloc] initWithDirection:endV tip:self.to size:self.headSize];
+    
+    // Add the path
+    UIBezierPath *headPath = [arrowHead arrowHeadBezierPath];
+    
+    [self updateHeadType];
+    if(self.headType != SCArrowViewHeadTypeEdges) {
+        [headPath closePath];
+    }
+
+    self.arrowHeadLayer.path = headPath.CGPath;
+}
+
+#pragma mark - Utility methods
+- (void)updateHeadType
+{
+    if(self.headType == SCArrowViewHeadTypeFilled) {
+        self.arrowHeadLayer.fillColor = self.color.CGColor;
+    } else {
+        self.arrowHeadLayer.fillColor = nil;
+    }
 }
 
 
