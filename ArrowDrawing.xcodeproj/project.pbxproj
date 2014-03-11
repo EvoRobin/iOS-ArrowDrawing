@@ -28,6 +28,7 @@
 		F41A17AD18CE16E1003E4C94 /* SCArrowPathQuad.m in Sources */ = {isa = PBXBuildFile; fileRef = F41A17AC18CE16E1003E4C94 /* SCArrowPathQuad.m */; };
 		F41A17B018CE16F3003E4C94 /* SCArrowPath.m in Sources */ = {isa = PBXBuildFile; fileRef = F41A17AF18CE16F3003E4C94 /* SCArrowPath.m */; };
 		F41A17B318CE1700003E4C94 /* SCArrowPathCubic.m in Sources */ = {isa = PBXBuildFile; fileRef = F41A17B218CE1700003E4C94 /* SCArrowPathCubic.m */; };
+		F4A874FC18CF087E00105BD5 /* SCArrowHead.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A874FB18CF087E00105BD5 /* SCArrowHead.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,8 @@
 		F41A17AF18CE16F3003E4C94 /* SCArrowPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCArrowPath.m; sourceTree = "<group>"; };
 		F41A17B118CE1700003E4C94 /* SCArrowPathCubic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCArrowPathCubic.h; sourceTree = "<group>"; };
 		F41A17B218CE1700003E4C94 /* SCArrowPathCubic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCArrowPathCubic.m; sourceTree = "<group>"; };
+		F4A874FA18CF087E00105BD5 /* SCArrowHead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCArrowHead.h; sourceTree = "<group>"; };
+		F4A874FB18CF087E00105BD5 /* SCArrowHead.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCArrowHead.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,6 +223,8 @@
 		F41A17B418CE22E0003E4C94 /* ArrowHeads */ = {
 			isa = PBXGroup;
 			children = (
+				F4A874FA18CF087E00105BD5 /* SCArrowHead.h */,
+				F4A874FB18CF087E00105BD5 /* SCArrowHead.m */,
 			);
 			name = ArrowHeads;
 			sourceTree = "<group>";
@@ -343,6 +348,7 @@
 				F41A178318C74A9F003E4C94 /* SCCoreAnimationArrowViewController.m in Sources */,
 				F41A17AD18CE16E1003E4C94 /* SCArrowPathQuad.m in Sources */,
 				F41A17B318CE1700003E4C94 /* SCArrowPathCubic.m in Sources */,
+				F4A874FC18CF087E00105BD5 /* SCArrowHead.m in Sources */,
 				F41A178018C74A9F003E4C94 /* SCCoreGraphicsArrowViewController.m in Sources */,
 				227472FF18CC7C1A002DD2C1 /* SCCurveUtils.m in Sources */,
 				F41A17A418C7862A003E4C94 /* SCCoreGraphicsArrowView.m in Sources */,

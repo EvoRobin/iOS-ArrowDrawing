@@ -11,6 +11,7 @@
 #import "SC2DVector.h"
 #import "SCArrowPathQuad.h"
 #import "SCArrowPathCubic.h"
+#import "SCArrowHead.h"
 
 @implementation SCCoreGraphicsArrowView
 
@@ -45,13 +46,19 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    // Drawing code
+    // Obtain the drawing context
     CGContextRef cxt = UIGraphicsGetCurrentContext();
+    
+    // Prepare some settings
+    [self.color setStroke];
+    [self.color setFill];
+    CGContextSetLineWidth(cxt, self.lineThickness);
+    
+    // Start a path
     CGContextBeginPath(cxt);
     
-    // Which kind of path are we going to use?
+    // Create the path of the arrow
     SCArrowPath *arrowPath;
-    
     if(self.curveType == SCArrowViewCurveTypeBoth) {
         arrowPath = [[SCArrowPathCubic alloc] initWithStart:self.from end:self.to];
     } else {
@@ -64,53 +71,32 @@
     arrowPath.bendiness = self.bendiness;
     CGContextAddPath(cxt, [arrowPath arrowPath]);
     
-    [self.color setStroke];
-    CGContextSetLineWidth(cxt, self.lineThickness);
     
-    if(arrowPath) {
-        // Now draw the end
-        SC2DVector *endV = [arrowPath directionAtEnd];
-        
-        // Out at right angles
-        SC2DVector *perpVector = [endV perpendicularVectorOfLength:self.headSize * 0.4];
+    /* We're adding the end to this path so that the path joins are correct. It
+     might seem nice to draw the arrow path and head path separately, but then
+     the arrow will stick out beyond the head. Therefore we draw the arrow here
+     and then re-draw it if we need to
+     */
+    
+    // Now draw the end
+    SC2DVector *endV = [arrowPath directionAtEnd];
+    SCArrowHead *arrowHead = [[SCArrowHead alloc] initWithDirection:endV tip:self.to size:self.headSize];
 
-        // Back from tip
-        SC2DVector *footOfArrow = [[SC2DVector vectorWithPoint:self.to] addVector:[endV normalisedToLength:-self.headSize]];
-        SC2DVector *arrowSide1 = [footOfArrow addVector:perpVector];
-        SC2DVector *arrowSide2 = [footOfArrow addVector:[perpVector multiplyByScalar:-1]];
-        
-
-        // Draw line to point
-        CGContextMoveToPoint(cxt, arrowSide1.x, arrowSide1.y);
-        CGContextAddLineToPoint(cxt, self.to.x, self.to.y);
-        
-        // Then to other out
-        CGContextAddLineToPoint(cxt, arrowSide2.x, arrowSide2.y);
-        
-        
-        // Stroke it
-        CGContextStrokePath(cxt);
-        
-        CGPathDrawingMode drawingMode;
-        if(self.headType == SCArrowViewHeadTypeFilled) {
-            drawingMode = kCGPathFillStroke;
-        } else {
-            drawingMode = kCGPathStroke;
-        }
-        
-        [self.color setFill];
+    // Add the path
+    CGContextAddPath(cxt, arrowHead.arrowHeadPath);
+    
+    // Stroke the arrow and head
+    CGContextStrokePath(cxt);
+    
+    // If we only want the edges, then we're done, otherwise, need to redraw the head
+    if(self.headType != SCArrowViewHeadTypeEdges) {
+        CGPathDrawingMode drawingMode = (self.headType == SCArrowViewHeadTypeFilled) ? kCGPathFillStroke : kCGPathStroke;
         // Redraw the head
-        CGContextMoveToPoint(cxt, arrowSide1.x, arrowSide1.y);
-        CGContextAddLineToPoint(cxt, self.to.x, self.to.y);
-        CGContextAddLineToPoint(cxt, arrowSide2.x, arrowSide2.y);
-        if(self.headType == SCArrowViewHeadTypeTriangle) {
-            CGContextAddLineToPoint(cxt, arrowSide1.x, arrowSide1.y);
-        }
+        CGContextAddPath(cxt, arrowHead.arrowHeadPath);
+        // Close the path so we cover both the triangle and filled state
+        CGContextClosePath(cxt);
         CGContextDrawPath(cxt, drawingMode);
-    } else {
-        CGContextStrokePath(cxt);
     }
-    
 }
 
 
