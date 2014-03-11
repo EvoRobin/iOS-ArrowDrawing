@@ -30,6 +30,8 @@
 		F41A17B318CE1700003E4C94 /* SCArrowPathCubic.m in Sources */ = {isa = PBXBuildFile; fileRef = F41A17B218CE1700003E4C94 /* SCArrowPathCubic.m */; };
 		F4A874FC18CF087E00105BD5 /* SCArrowHead.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A874FB18CF087E00105BD5 /* SCArrowHead.m */; };
 		F4A8750018CF116D00105BD5 /* SCCoreAnimationArrowView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A874FF18CF116D00105BD5 /* SCCoreAnimationArrowView.m */; };
+		F4A8750518CF315100105BD5 /* SCAnimatingCGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A8750418CF315100105BD5 /* SCAnimatingCGViewController.m */; };
+		F4A8750818CF31A900105BD5 /* SCAnimatingCGArrowView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A8750718CF31A900105BD5 /* SCAnimatingCGArrowView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +83,10 @@
 		F4A874FB18CF087E00105BD5 /* SCArrowHead.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCArrowHead.m; sourceTree = "<group>"; };
 		F4A874FE18CF116D00105BD5 /* SCCoreAnimationArrowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCoreAnimationArrowView.h; sourceTree = "<group>"; };
 		F4A874FF18CF116D00105BD5 /* SCCoreAnimationArrowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCoreAnimationArrowView.m; sourceTree = "<group>"; };
+		F4A8750318CF315100105BD5 /* SCAnimatingCGViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCAnimatingCGViewController.h; sourceTree = "<group>"; };
+		F4A8750418CF315100105BD5 /* SCAnimatingCGViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCAnimatingCGViewController.m; sourceTree = "<group>"; };
+		F4A8750618CF31A900105BD5 /* SCAnimatingCGArrowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCAnimatingCGArrowView.h; sourceTree = "<group>"; };
+		F4A8750718CF31A900105BD5 /* SCAnimatingCGArrowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCAnimatingCGArrowView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,13 +164,10 @@
 				F41A17A518C8A130003E4C94 /* SCArrowView.h */,
 				F4A874FD18CF115500105BD5 /* CoreAnimation Arrows */,
 				F41A17A118C75FC4003E4C94 /* CoreGraphics Arrows */,
+				F4A8750218CF312B00105BD5 /* View Controllers */,
 				F41A177818C74A9F003E4C94 /* SCAppDelegate.h */,
 				F41A177918C74A9F003E4C94 /* SCAppDelegate.m */,
 				F41A177B18C74A9F003E4C94 /* Main.storyboard */,
-				F41A177E18C74A9F003E4C94 /* SCCoreGraphicsArrowViewController.h */,
-				F41A177F18C74A9F003E4C94 /* SCCoreGraphicsArrowViewController.m */,
-				F41A178118C74A9F003E4C94 /* SCCoreAnimationArrowViewController.h */,
-				F41A178218C74A9F003E4C94 /* SCCoreAnimationArrowViewController.m */,
 				F41A178418C74A9F003E4C94 /* Images.xcassets */,
 				F41A177018C74A9F003E4C94 /* Supporting Files */,
 			);
@@ -205,6 +208,8 @@
 			children = (
 				F41A17A218C7862A003E4C94 /* SCCoreGraphicsArrowView.h */,
 				F41A17A318C7862A003E4C94 /* SCCoreGraphicsArrowView.m */,
+				F4A8750618CF31A900105BD5 /* SCAnimatingCGArrowView.h */,
+				F4A8750718CF31A900105BD5 /* SCAnimatingCGArrowView.m */,
 			);
 			name = "CoreGraphics Arrows";
 			sourceTree = "<group>";
@@ -248,6 +253,19 @@
 				227472FC18CC7C00002DD2C1 /* Utils */,
 			);
 			name = "Constituent Parts";
+			sourceTree = "<group>";
+		};
+		F4A8750218CF312B00105BD5 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				F41A177E18C74A9F003E4C94 /* SCCoreGraphicsArrowViewController.h */,
+				F41A177F18C74A9F003E4C94 /* SCCoreGraphicsArrowViewController.m */,
+				F41A178118C74A9F003E4C94 /* SCCoreAnimationArrowViewController.h */,
+				F41A178218C74A9F003E4C94 /* SCCoreAnimationArrowViewController.m */,
+				F4A8750318CF315100105BD5 /* SCAnimatingCGViewController.h */,
+				F4A8750418CF315100105BD5 /* SCAnimatingCGViewController.m */,
+			);
+			name = "View Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -369,6 +387,8 @@
 				F41A178318C74A9F003E4C94 /* SCCoreAnimationArrowViewController.m in Sources */,
 				F41A17AD18CE16E1003E4C94 /* SCArrowPathQuad.m in Sources */,
 				F4A8750018CF116D00105BD5 /* SCCoreAnimationArrowView.m in Sources */,
+				F4A8750818CF31A900105BD5 /* SCAnimatingCGArrowView.m in Sources */,
+				F4A8750518CF315100105BD5 /* SCAnimatingCGViewController.m in Sources */,
 				F41A17B318CE1700003E4C94 /* SCArrowPathCubic.m in Sources */,
 				F4A874FC18CF087E00105BD5 /* SCArrowHead.m in Sources */,
 				F41A178018C74A9F003E4C94 /* SCCoreGraphicsArrowViewController.m in Sources */,
