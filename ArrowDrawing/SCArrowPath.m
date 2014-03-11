@@ -31,7 +31,7 @@
 - (CGPathRef)arrowPath
 {
     // Just a straight line in the base implementation
-    UIBezierPath *path = [UIBezierPath new];
+    UIBezierPath *path = [UIBezierPath bezierPath];
     
     [path moveToPoint:self.start];
     [path addLineToPoint:self.end];

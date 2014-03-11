@@ -14,7 +14,7 @@
 
 - (CGPathRef)arrowPath
 {
-    UIBezierPath *path = [UIBezierPath new];
+    UIBezierPath *path = [UIBezierPath bezierPath];
     [path moveToPoint:self.start];
     NSArray *controlPoints = [self controlPoints];
     [path addCurveToPoint:self.end controlPoint1:[controlPoints[0] point] controlPoint2:[controlPoints[1] point]];

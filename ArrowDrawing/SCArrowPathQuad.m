@@ -14,7 +14,7 @@
 - (CGPathRef)arrowPath
 {
     // Create the path
-    UIBezierPath *path = [UIBezierPath new];
+    UIBezierPath *path = [UIBezierPath bezierPath];
     [path moveToPoint:self.start];
     [path addQuadCurveToPoint:self.end controlPoint:[self controlPoint].point];
     

@@ -32,7 +32,7 @@
     SC2DVector *arrowSide2 = [footOfArrow addVector:[perpVector multiplyByScalar:-1]];
     
     
-    UIBezierPath *path = [UIBezierPath new];
+    UIBezierPath *path = [UIBezierPath bezierPath];
     
     // Draw line to point
     [path moveToPoint:arrowSide1.point];
