@@ -13,16 +13,24 @@
 #import "SCArrowPathCubic.h"
 #import "SCArrowHead.h"
 
+#define GENERATE_SETTER_WITH_SETNEEDSDISPLAY(PROPERTY, TYPE, SETTER) \
+@synthesize PROPERTY = _##PROPERTY; \
+\
+- (void)SETTER:(TYPE)PROPERTY { \
+_##PROPERTY = PROPERTY; \
+[self setNeedsDisplay]; \
+}
+
 @implementation SCCoreGraphicsArrowView
 
-@synthesize lineThickness = _lineThickness;
-@synthesize bendiness = _bendiness;
-@synthesize color = _color;
-@synthesize curveType = _curveType;
-@synthesize from = _from;
-@synthesize to = _to;
-@synthesize headSize = _headSize;
-@synthesize headType = _headType;
+GENERATE_SETTER_WITH_SETNEEDSDISPLAY(lineThickness, CGFloat, setLineThickness)
+GENERATE_SETTER_WITH_SETNEEDSDISPLAY(bendiness, CGFloat, setBendiness)
+GENERATE_SETTER_WITH_SETNEEDSDISPLAY(color, UIColor *, setColor)
+GENERATE_SETTER_WITH_SETNEEDSDISPLAY(curveType, SCArrowViewCurveType, setCurveType)
+GENERATE_SETTER_WITH_SETNEEDSDISPLAY(from, CGPoint, setFrom)
+GENERATE_SETTER_WITH_SETNEEDSDISPLAY(to, CGPoint, setTo)
+GENERATE_SETTER_WITH_SETNEEDSDISPLAY(headSize, CGFloat, setHeadSize)
+GENERATE_SETTER_WITH_SETNEEDSDISPLAY(headType, SCArrowViewHeadType, setHeadType)
 
 - (id)initWithFrame:(CGRect)frame from:(CGPoint)from to:(CGPoint)to
 {
@@ -108,57 +116,5 @@
     CGPathRelease(arrowCGPath);
     CGPathRelease(headCGPath);
 }
-
-#pragma mark - Property setters
-- (void)setFrom:(CGPoint)from
-{
-    _from = from;
-    [self setNeedsDisplay];
-}
-
-- (void)setTo:(CGPoint)to
-{
-    _to = to;
-    [self setNeedsDisplay];
-}
-
-- (void)setColor:(UIColor *)color
-{
-    _color = color;
-    [self setNeedsDisplay];
-}
-
-- (void)setLineThickness:(CGFloat)lineThickness
-{
-    _lineThickness = lineThickness;
-    [self setNeedsDisplay];
-}
-
-- (void)setHeadSize:(CGFloat)headSize
-{
-    _headSize = headSize;
-    [self setNeedsDisplay];
-}
-
-- (void)setHeadType:(SCArrowViewHeadType)headType
-{
-    _headType = headType;
-    [self setNeedsDisplay];
-}
-
-- (void)setBendiness:(CGFloat)bendiness
-{
-    _bendiness = bendiness;
-    [self setNeedsDisplay];
-}
-
-- (void)setCurveType:(SCArrowViewCurveType)curveType
-{
-    _curveType = curveType;
-    [self setNeedsDisplay];
-}
-
-
-
 
 @end
