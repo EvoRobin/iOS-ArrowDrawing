@@ -17,6 +17,6 @@
 
 - (instancetype)initWithDirection:(SC2DVector *)direction tip:(CGPoint)tip size:(CGFloat)size;
 
-- (CGPathRef)arrowHeadPath;
+- (CGPathRef)arrowHeadPath CF_RETURNS_RETAINED;
 
 @end

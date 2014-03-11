@@ -41,7 +41,7 @@
     // Then to other out
     [path addLineToPoint:arrowSide2.point];
     
-    return path.CGPath;
+    return CGPathCreateCopy(path.CGPath);
 }
 
 @end

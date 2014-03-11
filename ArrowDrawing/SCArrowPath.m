@@ -35,7 +35,7 @@
     
     [path moveToPoint:self.start];
     [path addLineToPoint:self.end];
-    return [path CGPath];
+    return CGPathCreateCopy(path.CGPath);
 }
 
 - (SC2DVector *)directionAtEnd

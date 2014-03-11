@@ -18,7 +18,7 @@
     [path moveToPoint:self.start];
     NSArray *controlPoints = [self controlPoints];
     [path addCurveToPoint:self.end controlPoint1:[controlPoints[0] point] controlPoint2:[controlPoints[1] point]];
-    return path.CGPath;
+    return CGPathCreateCopy(path.CGPath);
 }
 
 - (SC2DVector *)directionAtEnd

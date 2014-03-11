@@ -18,7 +18,7 @@
     [path moveToPoint:self.start];
     [path addQuadCurveToPoint:self.end controlPoint:[self controlPoint].point];
     
-    return path.CGPath;
+    return CGPathCreateCopy(path.CGPath);
 }
 
 - (SC2DVector *)directionAtEnd

@@ -46,6 +46,10 @@
 
 - (void)drawRect:(CGRect)rect
 {
+    // Some local path variables
+    CGPathRef arrowCGPath;
+    CGPathRef headCGPath;
+    
     // Obtain the drawing context
     CGContextRef cxt = UIGraphicsGetCurrentContext();
     
@@ -69,7 +73,8 @@
     }
     
     arrowPath.bendiness = self.bendiness;
-    CGContextAddPath(cxt, [arrowPath arrowPath]);
+    arrowCGPath = [arrowPath arrowPath];
+    CGContextAddPath(cxt, arrowCGPath);
     
     
     /* We're adding the end to this path so that the path joins are correct. It
@@ -83,7 +88,8 @@
     SCArrowHead *arrowHead = [[SCArrowHead alloc] initWithDirection:endV tip:self.to size:self.headSize];
 
     // Add the path
-    CGContextAddPath(cxt, arrowHead.arrowHeadPath);
+    headCGPath = [arrowHead arrowHeadPath];
+    CGContextAddPath(cxt, headCGPath);
     
     // Stroke the arrow and head
     CGContextStrokePath(cxt);
@@ -92,11 +98,15 @@
     if(self.headType != SCArrowViewHeadTypeEdges) {
         CGPathDrawingMode drawingMode = (self.headType == SCArrowViewHeadTypeFilled) ? kCGPathFillStroke : kCGPathStroke;
         // Redraw the head
-        CGContextAddPath(cxt, arrowHead.arrowHeadPath);
+        CGContextAddPath(cxt, headCGPath);
         // Close the path so we cover both the triangle and filled state
         CGContextClosePath(cxt);
         CGContextDrawPath(cxt, drawingMode);
     }
+    
+    // Release some CGPaths
+    CGPathRelease(arrowCGPath);
+    CGPathRelease(headCGPath);
 }
 
 

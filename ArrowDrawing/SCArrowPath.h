@@ -18,7 +18,7 @@
 
 - (instancetype)initWithStart:(CGPoint)start end:(CGPoint)end;
 
-- (CGPathRef)arrowPath;
+- (CGPathRef)arrowPath CF_RETURNS_RETAINED;
 - (SC2DVector *)directionAtEnd;
 
 @end
