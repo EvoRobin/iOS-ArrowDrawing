@@ -18,5 +18,6 @@
 - (instancetype)initWithDirection:(SC2DVector *)direction tip:(CGPoint)tip size:(CGFloat)size;
 
 - (CGPathRef)arrowHeadPath CF_RETURNS_RETAINED;
+- (UIBezierPath *)arrowHeadBezierPath;
 
 @end

@@ -29,6 +29,7 @@
 		F41A17B018CE16F3003E4C94 /* SCArrowPath.m in Sources */ = {isa = PBXBuildFile; fileRef = F41A17AF18CE16F3003E4C94 /* SCArrowPath.m */; };
 		F41A17B318CE1700003E4C94 /* SCArrowPathCubic.m in Sources */ = {isa = PBXBuildFile; fileRef = F41A17B218CE1700003E4C94 /* SCArrowPathCubic.m */; };
 		F4A874FC18CF087E00105BD5 /* SCArrowHead.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A874FB18CF087E00105BD5 /* SCArrowHead.m */; };
+		F4A8750018CF116D00105BD5 /* SCCoreAnimationArrowView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A874FF18CF116D00105BD5 /* SCCoreAnimationArrowView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +79,8 @@
 		F41A17B218CE1700003E4C94 /* SCArrowPathCubic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCArrowPathCubic.m; sourceTree = "<group>"; };
 		F4A874FA18CF087E00105BD5 /* SCArrowHead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCArrowHead.h; sourceTree = "<group>"; };
 		F4A874FB18CF087E00105BD5 /* SCArrowHead.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCArrowHead.m; sourceTree = "<group>"; };
+		F4A874FE18CF116D00105BD5 /* SCCoreAnimationArrowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCoreAnimationArrowView.h; sourceTree = "<group>"; };
+		F4A874FF18CF116D00105BD5 /* SCCoreAnimationArrowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCoreAnimationArrowView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,10 +154,9 @@
 		F41A176F18C74A9F003E4C94 /* ArrowDrawing */ = {
 			isa = PBXGroup;
 			children = (
-				F41A17B418CE22E0003E4C94 /* ArrowHeads */,
-				F41A17AA18CE1660003E4C94 /* ArrowPaths */,
-				227472FC18CC7C00002DD2C1 /* Utils */,
+				F4A8750118CF117600105BD5 /* Constituent Parts */,
 				F41A17A518C8A130003E4C94 /* SCArrowView.h */,
+				F4A874FD18CF115500105BD5 /* CoreAnimation Arrows */,
 				F41A17A118C75FC4003E4C94 /* CoreGraphics Arrows */,
 				F41A177818C74A9F003E4C94 /* SCAppDelegate.h */,
 				F41A177918C74A9F003E4C94 /* SCAppDelegate.m */,
@@ -227,6 +229,25 @@
 				F4A874FB18CF087E00105BD5 /* SCArrowHead.m */,
 			);
 			name = ArrowHeads;
+			sourceTree = "<group>";
+		};
+		F4A874FD18CF115500105BD5 /* CoreAnimation Arrows */ = {
+			isa = PBXGroup;
+			children = (
+				F4A874FE18CF116D00105BD5 /* SCCoreAnimationArrowView.h */,
+				F4A874FF18CF116D00105BD5 /* SCCoreAnimationArrowView.m */,
+			);
+			name = "CoreAnimation Arrows";
+			sourceTree = "<group>";
+		};
+		F4A8750118CF117600105BD5 /* Constituent Parts */ = {
+			isa = PBXGroup;
+			children = (
+				F41A17B418CE22E0003E4C94 /* ArrowHeads */,
+				F41A17AA18CE1660003E4C94 /* ArrowPaths */,
+				227472FC18CC7C00002DD2C1 /* Utils */,
+			);
+			name = "Constituent Parts";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -347,6 +368,7 @@
 			files = (
 				F41A178318C74A9F003E4C94 /* SCCoreAnimationArrowViewController.m in Sources */,
 				F41A17AD18CE16E1003E4C94 /* SCArrowPathQuad.m in Sources */,
+				F4A8750018CF116D00105BD5 /* SCCoreAnimationArrowView.m in Sources */,
 				F41A17B318CE1700003E4C94 /* SCArrowPathCubic.m in Sources */,
 				F4A874FC18CF087E00105BD5 /* SCArrowHead.m in Sources */,
 				F41A178018C74A9F003E4C94 /* SCCoreGraphicsArrowViewController.m in Sources */,

@@ -19,6 +19,7 @@
 - (instancetype)initWithStart:(CGPoint)start end:(CGPoint)end;
 
 - (CGPathRef)arrowPath CF_RETURNS_RETAINED;
+- (UIBezierPath *)arrowBezierPath;
 - (SC2DVector *)directionAtEnd;
 
 @end

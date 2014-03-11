@@ -11,14 +11,14 @@
 
 @implementation SCArrowPathQuad
 
-- (CGPathRef)arrowPath
+- (UIBezierPath *)arrowBezierPath
 {
     // Create the path
     UIBezierPath *path = [UIBezierPath bezierPath];
     [path moveToPoint:self.start];
     [path addQuadCurveToPoint:self.end controlPoint:[self controlPoint].point];
     
-    return CGPathCreateCopy(path.CGPath);
+    return path;
 }
 
 - (SC2DVector *)directionAtEnd

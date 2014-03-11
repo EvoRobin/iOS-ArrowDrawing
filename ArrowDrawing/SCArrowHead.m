@@ -21,7 +21,7 @@
     return self;
 }
 
-- (CGPathRef)arrowHeadPath
+- (UIBezierPath *)arrowHeadBezierPath
 {
     // Out at right angles
     SC2DVector *perpVector = [self.direction perpendicularVectorOfLength:self.size * 0.4];
@@ -41,7 +41,12 @@
     // Then to other out
     [path addLineToPoint:arrowSide2.point];
     
-    return CGPathCreateCopy(path.CGPath);
+    return path;
+}
+
+- (CGPathRef)arrowHeadPath
+{
+    return CGPathCreateCopy([self arrowHeadBezierPath].CGPath);
 }
 
 @end

@@ -28,14 +28,19 @@
     return self;
 }
 
-- (CGPathRef)arrowPath
+- (UIBezierPath *)arrowBezierPath
 {
     // Just a straight line in the base implementation
     UIBezierPath *path = [UIBezierPath bezierPath];
     
     [path moveToPoint:self.start];
     [path addLineToPoint:self.end];
-    return CGPathCreateCopy(path.CGPath);
+    return path;
+}
+
+- (CGPathRef)arrowPath
+{
+    return CGPathCreateCopy([self arrowBezierPath].CGPath);
 }
 
 - (SC2DVector *)directionAtEnd

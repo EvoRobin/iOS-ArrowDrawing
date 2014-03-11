@@ -12,13 +12,13 @@
 
 @implementation SCArrowPathCubic
 
-- (CGPathRef)arrowPath
+- (UIBezierPath *)arrowBezierPath
 {
     UIBezierPath *path = [UIBezierPath bezierPath];
     [path moveToPoint:self.start];
     NSArray *controlPoints = [self controlPoints];
     [path addCurveToPoint:self.end controlPoint1:[controlPoints[0] point] controlPoint2:[controlPoints[1] point]];
-    return CGPathCreateCopy(path.CGPath);
+    return path;
 }
 
 - (SC2DVector *)directionAtEnd
