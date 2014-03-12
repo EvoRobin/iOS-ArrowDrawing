@@ -11,7 +11,6 @@
 #import "SCArrowPathQuad.h"
 #import "SCArrowHead.h"
 
-#define LAYER ((CAShapeLayer*)self.layer)
 #define GENERATE_SETTER_WITH_LAYER_REDRAW(PROPERTY, TYPE, SETTER, UPDATE_METHOD) \
 @synthesize PROPERTY = _##PROPERTY; \
 \
@@ -22,6 +21,7 @@ _##PROPERTY = PROPERTY; \
 
 @interface SCCoreAnimationArrowView ()
 
+@property (nonatomic, strong) CAShapeLayer *arrowPathLayer;
 @property (nonatomic, strong) CAShapeLayer *arrowHeadLayer;
 @property (nonatomic, strong) SCArrowPath *arrowPath;
 
@@ -37,6 +37,7 @@ GENERATE_SETTER_WITH_LAYER_REDRAW(from, CGPoint, setFrom, updateArrowLayer)
 GENERATE_SETTER_WITH_LAYER_REDRAW(to, CGPoint, setTo, updateArrowLayer)
 GENERATE_SETTER_WITH_LAYER_REDRAW(headSize, CGFloat, setHeadSize, updateArrowHead)
 GENERATE_SETTER_WITH_LAYER_REDRAW(headType, SCArrowViewHeadType, setHeadType, updateArrowHead)
+GENERATE_SETTER_WITH_LAYER_REDRAW(shouldAnimate, BOOL, setShouldAnimate, updateArrowLayer)
 
 // Other properties
 @synthesize lineThickness = _lineThickness;
@@ -45,7 +46,7 @@ GENERATE_SETTER_WITH_LAYER_REDRAW(headType, SCArrowViewHeadType, setHeadType, up
 - (void)setColor:(UIColor *)color
 {
     _color = color;
-    LAYER.strokeColor = color.CGColor;
+    self.arrowPathLayer.strokeColor = color.CGColor;
     self.arrowHeadLayer.strokeColor = color.CGColor;
     [self updateHeadType];
 }
@@ -53,7 +54,7 @@ GENERATE_SETTER_WITH_LAYER_REDRAW(headType, SCArrowViewHeadType, setHeadType, up
 - (void)setLineThickness:(CGFloat)lineThickness
 {
     _lineThickness = lineThickness;
-    LAYER.lineWidth = lineThickness;
+    self.arrowPathLayer.lineWidth = lineThickness;
     self.arrowHeadLayer.lineWidth = lineThickness;
 }
 
@@ -77,6 +78,7 @@ GENERATE_SETTER_WITH_LAYER_REDRAW(headType, SCArrowViewHeadType, setHeadType, up
         self.headType = SCArrowViewHeadTypeEdges;
         self.bendiness = 0.2;
         self.curveType = SCArrowViewCurveTypeLeft;
+        self.shouldAnimate = NO;
         
         // Prepare the layer
         [self updateArrowLayer];
@@ -87,10 +89,18 @@ GENERATE_SETTER_WITH_LAYER_REDRAW(headType, SCArrowViewHeadType, setHeadType, up
 
 - (void)updateArrowLayer
 {
+    if(!self.arrowPathLayer) {
+        self.arrowPathLayer = [CAShapeLayer layer];
+        [self.layer addSublayer:self.arrowPathLayer];
+    }
+    // Check the size and position
+    self.arrowPathLayer.bounds = self.bounds;
+    self.arrowPathLayer.position = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
+    
     // Set some properties
-    LAYER.strokeColor = self.color.CGColor;
-    LAYER.lineWidth = self.lineThickness;
-    LAYER.fillColor = nil; // Don't allow filling for now
+    self.arrowPathLayer.strokeColor = self.color.CGColor;
+    self.arrowPathLayer.lineWidth = self.lineThickness;
+    self.arrowPathLayer.fillColor = nil; // Don't allow filling for now
     
     // Create the path of the arrow
     if(self.curveType == SCArrowViewCurveTypeBoth) {
@@ -106,13 +116,14 @@ GENERATE_SETTER_WITH_LAYER_REDRAW(headType, SCArrowViewHeadType, setHeadType, up
     UIBezierPath *path = [self.arrowPath arrowBezierPath];
     
     // Now draw the end
-    SC2DVector *endV = [self.arrowPath directionAtEnd];
+    /*SC2DVector *endV = [self.arrowPath directionAtEnd];
     SCArrowHead *arrowHead = [[SCArrowHead alloc] initWithDirection:endV tip:self.to size:self.headSize];
     
     // Add the path
     [path appendPath:[arrowHead arrowHeadBezierPath]];
-
-    LAYER.path = path.CGPath;
+*/
+    self.arrowPathLayer.path = path.CGPath;
+    
     
     // Also need to update the head
     [self updateArrowHead];
@@ -141,6 +152,45 @@ GENERATE_SETTER_WITH_LAYER_REDRAW(headType, SCArrowViewHeadType, setHeadType, up
     }
 
     self.arrowHeadLayer.path = headPath.CGPath;
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    if(self.shouldAnimate) {
+        
+        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+        animation.duration = 2;
+        animation.fromValue = @0;
+        animation.toValue = @1;
+        animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+        
+        CABasicAnimation *headHidden = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+        headHidden.duration = 2;
+        headHidden.fromValue = @0;
+        headHidden.toValue = @0;
+        
+        CABasicAnimation *headAnimationLeft = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+        headAnimationLeft.duration = 1.0;
+        headAnimationLeft.fromValue = @0.5;
+        headAnimationLeft.toValue = @1;
+        headAnimationLeft.beginTime = 2;
+        headAnimationLeft.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+        
+        CABasicAnimation *headAnimationRight = [CABasicAnimation animationWithKeyPath:@"strokeStart"];
+        headAnimationRight.duration = 1.0;
+        headAnimationRight.fromValue = @0.5;
+        headAnimationRight.toValue = @0;
+        headAnimationRight.beginTime = 2;
+        headAnimationRight.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+        
+        CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
+        animationGroup.duration = 3;
+        animationGroup.animations = @[headHidden, headAnimationRight, headAnimationLeft];
+        
+        [self.arrowPathLayer addAnimation:animation forKey:@"SCArrowDrawAnimation"];
+        [self.arrowHeadLayer addAnimation:animationGroup forKey:@"SCArrowDrawHeadAnimation"];
+    }
 }
 
 #pragma mark - Utility methods

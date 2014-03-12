@@ -11,4 +11,6 @@
 
 @interface SCCoreAnimationArrowView : UIView <SCArrowView>
 
+@property (nonatomic, assign) BOOL shouldAnimate;
+
 @end
