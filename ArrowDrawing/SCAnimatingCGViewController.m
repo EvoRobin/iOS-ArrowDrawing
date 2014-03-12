@@ -30,7 +30,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    [self.arrow setNeedsDisplay];
+    [self.arrow redrawArrow];
 }
 
 

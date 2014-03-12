@@ -86,6 +86,45 @@ GENERATE_SETTER_WITH_LAYER_REDRAW(shouldAnimate, BOOL, setShouldAnimate, updateA
     return self;
 }
 
+- (void)redrawArrow
+{
+    [self updateArrowLayer];
+    if(self.shouldAnimate) {
+        
+        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+        animation.duration = 2;
+        animation.fromValue = @0;
+        animation.toValue = @1;
+        animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+        
+        CABasicAnimation *headHidden = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+        headHidden.duration = 2;
+        headHidden.fromValue = @0;
+        headHidden.toValue = @0;
+        
+        CABasicAnimation *headAnimationLeft = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+        headAnimationLeft.duration = 1.0;
+        headAnimationLeft.fromValue = @0.5;
+        headAnimationLeft.toValue = @1;
+        headAnimationLeft.beginTime = 2;
+        headAnimationLeft.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+        
+        CABasicAnimation *headAnimationRight = [CABasicAnimation animationWithKeyPath:@"strokeStart"];
+        headAnimationRight.duration = 1.0;
+        headAnimationRight.fromValue = @0.5;
+        headAnimationRight.toValue = @0;
+        headAnimationRight.beginTime = 2;
+        headAnimationRight.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+        
+        CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
+        animationGroup.duration = 3;
+        animationGroup.animations = @[headHidden, headAnimationRight, headAnimationLeft];
+        
+        [self.arrowPathLayer addAnimation:animation forKey:@"SCArrowDrawAnimation"];
+        [self.arrowHeadLayer addAnimation:animationGroup forKey:@"SCArrowDrawHeadAnimation"];
+    }
+}
+
 
 - (void)updateArrowLayer
 {
@@ -114,14 +153,6 @@ GENERATE_SETTER_WITH_LAYER_REDRAW(shouldAnimate, BOOL, setShouldAnimate, updateA
     self.arrowPath.bendiness = self.bendiness;
     
     UIBezierPath *path = [self.arrowPath arrowBezierPath];
-    
-    // Now draw the end
-    /*SC2DVector *endV = [self.arrowPath directionAtEnd];
-    SCArrowHead *arrowHead = [[SCArrowHead alloc] initWithDirection:endV tip:self.to size:self.headSize];
-    
-    // Add the path
-    [path appendPath:[arrowHead arrowHeadBezierPath]];
-*/
     self.arrowPathLayer.path = path.CGPath;
     
     
@@ -157,40 +188,7 @@ GENERATE_SETTER_WITH_LAYER_REDRAW(shouldAnimate, BOOL, setShouldAnimate, updateA
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    if(self.shouldAnimate) {
-        
-        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-        animation.duration = 2;
-        animation.fromValue = @0;
-        animation.toValue = @1;
-        animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
-        
-        CABasicAnimation *headHidden = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-        headHidden.duration = 2;
-        headHidden.fromValue = @0;
-        headHidden.toValue = @0;
-        
-        CABasicAnimation *headAnimationLeft = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-        headAnimationLeft.duration = 1.0;
-        headAnimationLeft.fromValue = @0.5;
-        headAnimationLeft.toValue = @1;
-        headAnimationLeft.beginTime = 2;
-        headAnimationLeft.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
-        
-        CABasicAnimation *headAnimationRight = [CABasicAnimation animationWithKeyPath:@"strokeStart"];
-        headAnimationRight.duration = 1.0;
-        headAnimationRight.fromValue = @0.5;
-        headAnimationRight.toValue = @0;
-        headAnimationRight.beginTime = 2;
-        headAnimationRight.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
-        
-        CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
-        animationGroup.duration = 3;
-        animationGroup.animations = @[headHidden, headAnimationRight, headAnimationLeft];
-        
-        [self.arrowPathLayer addAnimation:animation forKey:@"SCArrowDrawAnimation"];
-        [self.arrowHeadLayer addAnimation:animationGroup forKey:@"SCArrowDrawHeadAnimation"];
-    }
+    [self redrawArrow];
 }
 
 #pragma mark - Utility methods

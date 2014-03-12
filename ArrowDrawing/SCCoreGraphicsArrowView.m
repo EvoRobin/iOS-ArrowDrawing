@@ -51,6 +51,10 @@ GENERATE_SETTER_WITH_SETNEEDSDISPLAY(headType, SCArrowViewHeadType, setHeadType)
     return self;
 }
 
+- (void)redrawArrow
+{
+    [self setNeedsDisplay];
+}
 
 - (void)drawRect:(CGRect)rect
 {

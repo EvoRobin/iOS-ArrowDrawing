@@ -35,4 +35,7 @@ typedef NS_ENUM(NSInteger, SCArrowViewHeadType) {
 @property (nonatomic, assign) SCArrowViewCurveType curveType;
 @property (nonatomic, assign) SCArrowViewHeadType headType;
 
+// For demonstration purposes
+- (void)redrawArrow;
+
 @end

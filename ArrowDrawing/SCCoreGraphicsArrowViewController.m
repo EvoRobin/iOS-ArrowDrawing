@@ -11,6 +11,8 @@
 
 @interface SCCoreGraphicsArrowViewController ()
 
+@property (nonatomic, strong) NSMutableArray *arrows;
+
 @end
 
 @implementation SCCoreGraphicsArrowViewController
@@ -20,31 +22,32 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    NSMutableArray *arrows = [NSMutableArray array];
+    self.arrows = [NSMutableArray array];
     for(int i=0; i<10; i++) {
         id arrow = [[SCCoreGraphicsArrowView alloc] initWithFrame:self.view.bounds
                                                             from:CGPointMake(10, (i+1)*40)
                                                               to:CGPointMake(CGRectGetWidth(self.view.bounds)-10, (i+1)*40)];
         [self.view addSubview:arrow];
-        [arrows addObject:arrow];
+        [self.arrows addObject:arrow];
     }
     
-    [arrows[1] setBendiness:0.4];
-    [arrows[2] setCurveType:SCArrowViewCurveTypeRight];
-    [arrows[3] setHeadType:SCArrowViewHeadTypeFilled];
-    [arrows[4] setHeadType:SCArrowViewHeadTypeTriangle];
-    [arrows[5] setColor:[UIColor blueColor]];
-    [arrows[6] setCurveType:SCArrowViewCurveTypeBoth];
-    [arrows[7] setCurveType:SCArrowViewCurveTypeBoth];
-    [arrows[7] setBendiness:0.4];
-    [arrows[8] setLineThickness:5];
-    [arrows[9] setHeadSize:50];
+    [self.arrows[1] setBendiness:0.4];
+    [self.arrows[2] setCurveType:SCArrowViewCurveTypeRight];
+    [self.arrows[3] setHeadType:SCArrowViewHeadTypeFilled];
+    [self.arrows[4] setHeadType:SCArrowViewHeadTypeTriangle];
+    [self.arrows[5] setColor:[UIColor blueColor]];
+    [self.arrows[6] setCurveType:SCArrowViewCurveTypeBoth];
+    [self.arrows[7] setCurveType:SCArrowViewCurveTypeBoth];
+    [self.arrows[7] setBendiness:0.4];
+    [self.arrows[8] setLineThickness:5];
+    [self.arrows[9] setHeadSize:50];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    // Hacking the graphics system to get it to re-render each time we appear
-    [self.view setNeedsDisplay];
+    for (id<SCArrowView> arrow in self.arrows) {
+        [arrow redrawArrow];
+    }
 }
 
 @end
