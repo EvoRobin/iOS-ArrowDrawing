@@ -41,4 +41,10 @@
     [arrows[9] setHeadSize:50];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    // Hacking the graphics system to get it to re-render each time we appear
+    [self.view setNeedsDisplay];
+}
+
 @end

@@ -41,10 +41,10 @@
     [arrows[9] setHeadSize:50];
 }
 
-- (void)didReceiveMemoryWarning
+- (void)viewDidAppear:(BOOL)animated
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    // Hacking the graphics system to get it to re-render each time we appear
+    [self.view setNeedsDisplay];
 }
 
 @end

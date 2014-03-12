@@ -11,6 +11,8 @@
 
 @interface SCAnimatingCGViewController ()
 
+@property (nonatomic, strong) SCAnimatingCGArrowView *arrow;
+
 @end
 
 @implementation SCAnimatingCGViewController
@@ -19,11 +21,18 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    SCAnimatingCGArrowView *arrow = [[SCAnimatingCGArrowView alloc] initWithFrame:self.view.bounds
+    self.arrow = [[SCAnimatingCGArrowView alloc] initWithFrame:self.view.bounds
                                                                              from:CGPointMake(10, 30)
                                                                                to:CGPointMake(CGRectGetWidth(self.view.bounds)-10, 30)];
-    arrow.bendiness = 0;
-    [self.view addSubview:arrow];
+    self.arrow.bendiness = 0;
+    [self.view addSubview:self.arrow];
 }
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [self.arrow setNeedsDisplay];
+}
+
+
 
 @end
