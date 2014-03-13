@@ -68,6 +68,7 @@ GENERATE_SETTER_WITH_LAYER_REDRAW(shouldAnimate, BOOL, setShouldAnimate, updateA
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        self.userInteractionEnabled = NO;
         self.backgroundColor = [UIColor clearColor];
         self.from = from;
         self.to = to;

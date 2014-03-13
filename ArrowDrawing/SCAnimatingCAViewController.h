@@ -10,4 +10,10 @@
 
 @interface SCAnimatingCAViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIButton *createRandomArrows;
+@property (weak, nonatomic) IBOutlet UIView *arrowContainer;
+
+- (IBAction)startRandomArrowCreation:(id)sender;
+
+
 @end

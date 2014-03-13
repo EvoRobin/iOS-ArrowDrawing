@@ -33,6 +33,7 @@
 		F4A8750518CF315100105BD5 /* SCAnimatingCGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A8750418CF315100105BD5 /* SCAnimatingCGViewController.m */; };
 		F4A8750818CF31A900105BD5 /* SCAnimatingCGArrowView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A8750718CF31A900105BD5 /* SCAnimatingCGArrowView.m */; };
 		F4A8750B18D0A0B200105BD5 /* SCAnimatingCAViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A8750A18D0A0B200105BD5 /* SCAnimatingCAViewController.m */; };
+		F4A8750E18D1A99300105BD5 /* SCArrowRandomiser.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A8750D18D1A99300105BD5 /* SCArrowRandomiser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +91,8 @@
 		F4A8750718CF31A900105BD5 /* SCAnimatingCGArrowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCAnimatingCGArrowView.m; sourceTree = "<group>"; };
 		F4A8750918D0A0B200105BD5 /* SCAnimatingCAViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCAnimatingCAViewController.h; sourceTree = "<group>"; };
 		F4A8750A18D0A0B200105BD5 /* SCAnimatingCAViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCAnimatingCAViewController.m; sourceTree = "<group>"; };
+		F4A8750C18D1A99300105BD5 /* SCArrowRandomiser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCArrowRandomiser.h; sourceTree = "<group>"; };
+		F4A8750D18D1A99300105BD5 /* SCArrowRandomiser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCArrowRandomiser.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +126,8 @@
 				227472FE18CC7C1A002DD2C1 /* SCCurveUtils.m */,
 				2274730018CC7E48002DD2C1 /* SC2DVector.h */,
 				2274730118CC7E48002DD2C1 /* SC2DVector.m */,
+				F4A8750C18D1A99300105BD5 /* SCArrowRandomiser.h */,
+				F4A8750D18D1A99300105BD5 /* SCArrowRandomiser.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -392,6 +397,7 @@
 				F41A178318C74A9F003E4C94 /* SCCoreAnimationArrowViewController.m in Sources */,
 				F41A17AD18CE16E1003E4C94 /* SCArrowPathQuad.m in Sources */,
 				F4A8750018CF116D00105BD5 /* SCCoreAnimationArrowView.m in Sources */,
+				F4A8750E18D1A99300105BD5 /* SCArrowRandomiser.m in Sources */,
 				F4A8750818CF31A900105BD5 /* SCAnimatingCGArrowView.m in Sources */,
 				F4A8750518CF315100105BD5 /* SCAnimatingCGViewController.m in Sources */,
 				F4A8750B18D0A0B200105BD5 /* SCAnimatingCAViewController.m in Sources */,

@@ -8,10 +8,12 @@
 
 #import "SCAnimatingCAViewController.h"
 #import "SCCoreAnimationArrowView.h"
+#import "SCArrowRandomiser.h"
 
 @interface SCAnimatingCAViewController ()
 
 @property (nonatomic, strong) SCCoreAnimationArrowView *arrow;
+@property (nonatomic, strong) SCArrowRandomiser *arrowRandomiser;
 
 @end
 
@@ -32,4 +34,22 @@
 }
 
 
+- (IBAction)startRandomArrowCreation:(id)sender {
+    // Empty all the arrows currently in the container
+    // Have to make a copy as the the method mutates the actual subviews array
+    NSArray *subviews = [self.arrowContainer.subviews copy];
+    [subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
+    // Create a randomiser
+    if(!self.arrowRandomiser) {
+        self.arrowRandomiser = [[SCArrowRandomiser alloc] initWithParentView:self.arrowContainer
+                                                                arrowCreator:^UIView<SCArrowView> *(CGRect frame, CGPoint from, CGPoint to) {
+            SCCoreAnimationArrowView *arrow = [[SCCoreAnimationArrowView alloc] initWithFrame:frame from:from to:to];
+            arrow.shouldAnimate = YES;
+            return arrow;
+        }];
+    }
+    // Kick it off
+    [self.arrowRandomiser createArrowsForPeriod:10 withLambda:(1/0.2)];
+}
 @end
