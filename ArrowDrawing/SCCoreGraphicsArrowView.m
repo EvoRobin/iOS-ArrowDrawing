@@ -37,6 +37,7 @@ GENERATE_SETTER_WITH_SETNEEDSDISPLAY(headType, SCArrowViewHeadType, setHeadType)
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        self.userInteractionEnabled = NO;
         self.backgroundColor = [UIColor clearColor];
         self.from = from;
         self.to = to;

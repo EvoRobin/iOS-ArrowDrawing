@@ -10,4 +10,7 @@
 
 @interface SCAnimatingCGViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIView *arrowContainer;
+- (IBAction)handleCreateArrowsButtonPressed:(id)sender;
+
 @end
