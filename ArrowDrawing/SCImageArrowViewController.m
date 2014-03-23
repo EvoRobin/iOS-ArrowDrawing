@@ -29,7 +29,7 @@
     for(int i=0; i<10; i++) {
         id arrow = [[SCUIImageViewArrow alloc] initWithFrame:self.view.bounds
                                                              from:CGPointMake(10, (i+1)*40)
-                                                               to:CGPointMake(CGRectGetWidth(self.view.bounds)-10, (i+1)*40)];
+                                                               to:CGPointMake(CGRectGetWidth(self.view.bounds)-10, (i+1)*45)];
         [self.view addSubview:arrow];
         [self.arrows addObject:arrow];
     }

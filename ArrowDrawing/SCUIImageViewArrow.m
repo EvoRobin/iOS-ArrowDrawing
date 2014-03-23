@@ -86,7 +86,9 @@ GENERATE_SETTER_WITH_UPDATE(color, UIColor *, setColor, redrawArrow)
     self.arrowImageView.bounds = arrowBounds;
     
     // Need to rotate the arrow
-    
+    CGFloat arrowAngle = atan2((self.to.y - self.from.y),
+                               (self.to.x - self.from.x));
+    self.arrowImageView.transform = CGAffineTransformMakeRotation(arrowAngle);
     
     // Can recolour the arrow as well
     UIImage *preColoredArrow = [self preColoredArrowImage];
