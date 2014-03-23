@@ -36,7 +36,6 @@ _##PROPERTY = PROPERTY; \
 // Most properties are unsupported with this arrow type
 GENERATE_SETTER_WITH_NOOP_ERROR_LOG(lineThickness, CGFloat, setLineThickness)
 GENERATE_SETTER_WITH_NOOP_ERROR_LOG(bendiness, CGFloat, setBendiness)
-GENERATE_SETTER_WITH_NOOP_ERROR_LOG(color, UIColor *, setColor)
 GENERATE_SETTER_WITH_NOOP_ERROR_LOG(curveType, SCArrowViewCurveType, setCurveType)
 GENERATE_SETTER_WITH_NOOP_ERROR_LOG(headSize, CGFloat, setHeadSize)
 GENERATE_SETTER_WITH_NOOP_ERROR_LOG(headType, SCArrowViewHeadType, setHeadType)
@@ -44,6 +43,7 @@ GENERATE_SETTER_WITH_NOOP_ERROR_LOG(headType, SCArrowViewHeadType, setHeadType)
 // But these will work, and will need to update the arrow
 GENERATE_SETTER_WITH_UPDATE(from, CGPoint, setFrom, redrawArrow)
 GENERATE_SETTER_WITH_UPDATE(to, CGPoint, setTo, redrawArrow)
+GENERATE_SETTER_WITH_UPDATE(color, UIColor *, setColor, redrawArrow)
 
 - (id)initWithFrame:(CGRect)frame from:(CGPoint)from to:(CGPoint)to
 {
@@ -53,8 +53,11 @@ GENERATE_SETTER_WITH_UPDATE(to, CGPoint, setTo, redrawArrow)
         self.from = from;
         self.to   = to;
         
+        // Set defaults
+        self.color = [UIColor blackColor];
+        
         // Import the arrow image
-        self.image = [UIImage imageNamed:@"arrow_image"];
+        self.image = [self preColoredArrowImage];
         
         // Redraw the arrow correctly
         [self redrawArrow];
@@ -86,7 +89,19 @@ GENERATE_SETTER_WITH_UPDATE(to, CGPoint, setTo, redrawArrow)
     
     
     // Can recolour the arrow as well
+    UIImage *preColoredArrow = [self preColoredArrowImage];
+    // Prep the tint colour
+    self.tintColor = self.color;
+    // Set the rendering mode to respect tint color
+    self.image = [preColoredArrow imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    // And set to the image view
+    self.arrowImageView.image = self.image;
     
+}
+
+- (UIImage *)preColoredArrowImage
+{
+    return [UIImage imageNamed:@"arrow_image"];
 }
 
 @end
