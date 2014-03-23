@@ -1,14 +1,36 @@
 {
   "images" : [
     {
+      "resizing" : {
+        "mode" : "3-part-horizontal",
+        "center" : {
+          "mode" : "fill",
+          "width" : 64
+        },
+        "capInsets" : {
+          "right" : 36,
+          "left" : 0
+        }
+      },
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "arrow.png"
+      "filename" : "arrow.png",
+      "scale" : "1x"
     },
     {
+      "resizing" : {
+        "mode" : "3-part-horizontal",
+        "center" : {
+          "mode" : "fill",
+          "width" : 127
+        },
+        "capInsets" : {
+          "right" : 72,
+          "left" : 0
+        }
+      },
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "arrow@2x.png"
+      "filename" : "arrow@2x.png",
+      "scale" : "2x"
     }
   ],
   "info" : {
