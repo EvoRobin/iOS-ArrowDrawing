@@ -42,7 +42,27 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oQb-lf-cau" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1072" y="80"/>
+            <point key="canvasLocation" x="668" y="-39"/>
+        </scene>
+        <!--Image Arrow View Controller - UIImageView-->
+        <scene sceneID="wSq-3V-FSt">
+            <objects>
+                <viewController id="sVt-AC-rcQ" customClass="SCImageArrowViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="322-bR-sn2"/>
+                        <viewControllerLayoutGuide type="bottom" id="Jcj-gn-C3f"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="4A6-i4-4CU">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="UIImageView" image="second" id="GaW-2q-HNU"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UF2-tr-WF8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="667" y="697"/>
         </scene>
         <!--Core Graphics Arrow View Controller - First-->
         <scene sceneID="W3I-pn-N6e">
@@ -86,7 +106,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qh2-T1-AhA" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="469" y="-684"/>
+            <point key="canvasLocation" x="93" y="-776"/>
         </scene>
         <!--Core Animation Arrow View Controller - Second-->
         <scene sceneID="ot8-2e-RuS">
@@ -130,7 +150,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3qq-4t-Ow8" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1063" y="-684"/>
+            <point key="canvasLocation" x="643" y="-776"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Vex-rW-GRa">
@@ -143,6 +163,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
+                        <segue destination="sVt-AC-rcQ" kind="relationship" relationship="viewControllers" id="CRp-zj-9yg"/>
                         <segue destination="CZ4-MO-1fc" kind="relationship" relationship="viewControllers" id="SUk-Ux-ee1"/>
                         <segue destination="QUy-BD-bpt" kind="relationship" relationship="viewControllers" id="M8t-EP-wfW"/>
                         <segue destination="HE5-c7-cge" kind="relationship" relationship="viewControllers" id="csy-L3-EOf"/>
@@ -151,7 +172,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FNP-y4-bzi" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="132" y="180"/>
+            <point key="canvasLocation" x="-278" y="144"/>
         </scene>
         <!--AnimatingCA View Controller - CA Animation-->
         <scene sceneID="Yrh-1L-4y4">
@@ -192,7 +213,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kfd-66-tUi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="653" y="669"/>
+            <point key="canvasLocation" x="1193" y="-27"/>
         </scene>
     </scenes>
     <resources>

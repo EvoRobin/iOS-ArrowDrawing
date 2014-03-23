@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		22078C9E18DF9824005E8FDF /* SCImageArrowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22078C9D18DF9824005E8FDF /* SCImageArrowViewController.m */; };
+		22078CA218DF9933005E8FDF /* SCUIImageViewArrow.m in Sources */ = {isa = PBXBuildFile; fileRef = 22078CA118DF9933005E8FDF /* SCUIImageViewArrow.m */; };
 		227472FF18CC7C1A002DD2C1 /* SCCurveUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 227472FE18CC7C1A002DD2C1 /* SCCurveUtils.m */; };
 		2274730218CC7E48002DD2C1 /* SC2DVector.m in Sources */ = {isa = PBXBuildFile; fileRef = 2274730118CC7E48002DD2C1 /* SC2DVector.m */; };
 		F41A176A18C74A9F003E4C94 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F41A176918C74A9F003E4C94 /* Foundation.framework */; };
@@ -47,6 +49,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		22078C9C18DF9824005E8FDF /* SCImageArrowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCImageArrowViewController.h; sourceTree = "<group>"; };
+		22078C9D18DF9824005E8FDF /* SCImageArrowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCImageArrowViewController.m; sourceTree = "<group>"; };
+		22078CA018DF9933005E8FDF /* SCUIImageViewArrow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCUIImageViewArrow.h; sourceTree = "<group>"; };
+		22078CA118DF9933005E8FDF /* SCUIImageViewArrow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCUIImageViewArrow.m; sourceTree = "<group>"; };
 		227472FD18CC7C1A002DD2C1 /* SCCurveUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCurveUtils.h; sourceTree = "<group>"; };
 		227472FE18CC7C1A002DD2C1 /* SCCurveUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCurveUtils.m; sourceTree = "<group>"; };
 		2274730018CC7E48002DD2C1 /* SC2DVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SC2DVector.h; sourceTree = "<group>"; };
@@ -119,6 +125,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		22078C9F18DF9914005E8FDF /* UIImageView Arrows */ = {
+			isa = PBXGroup;
+			children = (
+				22078CA018DF9933005E8FDF /* SCUIImageViewArrow.h */,
+				22078CA118DF9933005E8FDF /* SCUIImageViewArrow.m */,
+			);
+			name = "UIImageView Arrows";
+			sourceTree = "<group>";
+		};
 		227472FC18CC7C00002DD2C1 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -170,6 +185,7 @@
 			children = (
 				F4A8750118CF117600105BD5 /* Constituent Parts */,
 				F41A17A518C8A130003E4C94 /* SCArrowView.h */,
+				22078C9F18DF9914005E8FDF /* UIImageView Arrows */,
 				F4A874FD18CF115500105BD5 /* CoreAnimation Arrows */,
 				F41A17A118C75FC4003E4C94 /* CoreGraphics Arrows */,
 				F4A8750218CF312B00105BD5 /* View Controllers */,
@@ -274,6 +290,8 @@
 				F4A8750418CF315100105BD5 /* SCAnimatingCGViewController.m */,
 				F4A8750918D0A0B200105BD5 /* SCAnimatingCAViewController.h */,
 				F4A8750A18D0A0B200105BD5 /* SCAnimatingCAViewController.m */,
+				22078C9C18DF9824005E8FDF /* SCImageArrowViewController.h */,
+				22078C9D18DF9824005E8FDF /* SCImageArrowViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -402,9 +420,11 @@
 				F4A8750518CF315100105BD5 /* SCAnimatingCGViewController.m in Sources */,
 				F4A8750B18D0A0B200105BD5 /* SCAnimatingCAViewController.m in Sources */,
 				F41A17B318CE1700003E4C94 /* SCArrowPathCubic.m in Sources */,
+				22078CA218DF9933005E8FDF /* SCUIImageViewArrow.m in Sources */,
 				F4A874FC18CF087E00105BD5 /* SCArrowHead.m in Sources */,
 				F41A178018C74A9F003E4C94 /* SCCoreGraphicsArrowViewController.m in Sources */,
 				227472FF18CC7C1A002DD2C1 /* SCCurveUtils.m in Sources */,
+				22078C9E18DF9824005E8FDF /* SCImageArrowViewController.m in Sources */,
 				F41A17A418C7862A003E4C94 /* SCCoreGraphicsArrowView.m in Sources */,
 				F41A17B018CE16F3003E4C94 /* SCArrowPath.m in Sources */,
 				2274730218CC7E48002DD2C1 /* SC2DVector.m in Sources */,
