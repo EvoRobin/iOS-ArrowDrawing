@@ -16,7 +16,8 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "SCBaseArrowViewController.h"
 
-@interface SCCoreAnimationArrowViewController : UIViewController
+@interface SCCoreAnimationArrowViewController : SCBaseArrowViewController
 
 @end

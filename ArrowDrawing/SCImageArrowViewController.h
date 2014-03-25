@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SCBaseArrowViewController.h"
 
-@interface SCImageArrowViewController : UIViewController
+@interface SCImageArrowViewController : SCBaseArrowViewController
 
 @end
